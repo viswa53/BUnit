@@ -2,45 +2,64 @@ body{
         font-family: 'Open Sans',sans-serif;
         font-weight: 500;
         color: #757578;
-        background-color: #EBF1E7;
+        background-color: #fff;
 }
-.header{height: 75px;background-color: #34302D;border-top: 5px solid #6DB33F;color: white;}
+.header {
+	background-color:#fff;
+    margin-top: 7px;
+    text-align: center;
+    margin-bottom: 20px;
+ }
+#container{
+	margin: 0 auto;
+   width: 1100px;
+   border:1px solid  #8EB3E5;
+   margin-top:30px;
+   margin-bottom:30px;
+   min-height: 500px;
+}
+.navbar-inverse {
+    background-color: #00ACC8;
+   border-color: #8EB3E5;
+}
+.navbar {
+	min-height: 0px;
+	border-radius: 0px;
+}
+.marginTop25{
+	margin-top: 25px;
+}
 .paddingTop10{padding-top: 10px}
 .error{color: #FF0000;font-size: 12px;}
-#invalid{}
-#menu{height: 50px;background-color: #6699ff;color: black;}
-#container {width: 90%;height: 100px;margin: 0 auto;position: relative;}
-#A, #B, #Z {position: absolute;
-    top: 0;
-    height: 100%;
+.navbar-inverse .navbar-nav > li > a {
+    color: #2E5249;
 }
-#A {
-   left: 0;
-    width: 39%;
-    background-color: #ccffcc;
-    height: 550px;
+.navbar-nav > li > a {
+	line-height: 2px !important;
+	font-size: 13px;
 }
-#B {
-    right: 0;
-    width: 59%;
-    background-color: #ccccff;
-    height: 550px;
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+    background-color: #00ACC8;
+    color: #fff;
 }
-#Z {
-    left: 39%;
-    width: 0.5%;
-    background-color: #cc0000;
-    cursor: move;
-    height: 550px;
+.bottomBorder{
+	border-bottom:2px solid #8EB3E5;
 }
-#A div, #B div {
-    position: absolute;
-    top: 40%;
-    left: 0;
-    width: 100%;
-    text-align: center;    
+.margin6{
+	margin: 6px;
 }
-#info {
-    text-align: center;
-    line-height: 2em;
+.leftContainer{
+	width:680px;
+	float: left;
+	border-bottom: 2px solid #8EB3E5;
+    border-right: 2px solid #8EB3E5;
+    
+}
+.rightContainer{
+	width:400px;
+	float:right;
+	border-bottom: 2px solid #8EB3E5;
+	margin-left:10px;
+	border-left:2px solid #8eb3e5;
+   }
 }
