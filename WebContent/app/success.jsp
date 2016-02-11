@@ -3,14 +3,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>Transit</title>
+	<title>BUnit</title>
 	<link rel="shortcut icon" href="img/title_logo.png">
 	<link href="css/lib/bootstrap.css" type="text/css" rel="stylesheet">
+	<link href="css/lib/jquery-ui.css" type="text/css" rel="stylesheet">
+	<link href="css/lib/jquery.ui.all.css" type="text/css" rel="stylesheet">
 	<link href="css/style.css" type="text/css" rel="stylesheet">
 	<link href="css/responsive.css" type="text/css" rel="stylesheet">
 	<link href="css/lib/font-awesome.min.css" type="text/css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Sanchez" rel="stylesheet">
 	<script> window.history.forward(1);</script>
+	
 </head>
 <body>
 
@@ -72,7 +75,7 @@
 </nav>
    </div>
    <div class="bottomBorder">&nbsp;</div>
-   <div style="width:1100px;">
+   <div class="parent" style="width:1100px;">
       <div class="leftContainer">
                    <div class="margin6">SCENARIO BUILD AREA</div>
       </div>
@@ -80,6 +83,10 @@
                   <div class="margin6"> ACTION WIDGETS</div>
       </div>
    </div>
+   <!-- <div class="parent">
+    <div class="child"></div>
+</div> -->
+   
 </div>
 
 

@@ -62,4 +62,17 @@ body{
 	margin-left:10px;
 	border-left:2px solid #8eb3e5;
    }
+   .parent {
+    position: relative;
+    width: 800px;
+    height: 500px;
+}
+.child {
+    position: absolute;
+   right: 0;
+    top: 0;
+    width: 200px;
+    height: 100%;
+    outline: 1px solid #ccc;
+}
 }
