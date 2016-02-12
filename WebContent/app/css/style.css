@@ -16,7 +16,8 @@ body{
    border:1px solid  #8EB3E5;
    margin-top:30px;
    margin-bottom:30px;
-   min-height: 500px;
+   min-height: 584px;
+   border-bottom:none;
 }
 .navbar-inverse {
     background-color: #00ACC8;
@@ -51,9 +52,15 @@ body{
 .leftContainer{
 	width:680px;
 	float: left;
-	border-bottom: 2px solid #8EB3E5;
-    border-right: 2px solid #8EB3E5;
+    border-right: 1px solid #8EB3E5;
+    min-height: 440px;
+    border-bottom: 1px solid #8EB3E5;
     
+}
+.scenarioIdDiv{
+	border-top: 2px solid #8EB3E5;
+    padding: 4px;
+    border-bottom: 1px solid #8eb3e5;
 }
 .rightContainer{
 	width:400px;
@@ -61,6 +68,7 @@ body{
 	border-bottom: 2px solid #8EB3E5;
 	margin-left:10px;
 	border-left:2px solid #8eb3e5;
+	 min-height: 440px;
    }
    .parent {
     position: relative;
@@ -74,5 +82,85 @@ body{
     width: 200px;
     height: 100%;
     outline: 1px solid #ccc;
+}
+.borderTop{
+	border-top:1px solid #8EB3E5;
+}
+.actionDiv{
+    background-color: #eee;
+    border-bottom: 1px solid #c6c6c6;
+    font-size: 12px;
+    padding: 4px;
+}
+.fontSize12{
+	font-size:12px;
+}
+.configScenario{
+	float: left;
+    padding-left: 5px;
+    padding-right: 80px;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 13px;
+    
+}
+
+th, td {
+    padding: 5px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+th {
+    background-color: #eee;
+}
+
+div.dataTables_wrapper {
+        width: 680px;
+        margin: 0 auto;
+ }
+ .ui-widget-header{
+ display:none;
+ }
+ .openCloseTerms {
+ background: rgba(0, 0, 0, 0) url("../img/ui-icons_222222_256x240.png") repeat-x scroll 27% 58%;
+    cursor: pointer;
+    height: 20px;
+    ssssize: inherit;
+     margin-top: 3px;
+    
+ }
+ .moduleClose {
+    background: rgba(0, 0, 0, 0) url("../img/ui-icons_222222_256x240.png") repeat-x scroll 13% 58%;
+    cursor: pointer;
+    height: 20px;
+    size: inherit;
+     margin-top: 3px;
+}
+.hide{
+	display:none;
+}
+.show{
+	display:block;
+}
+.selectedItem{
+	 background-color: #fff;
+	
+}
+.actionRightDiv {
+	background-color: #eee;
+	border: 1px solid #8eb3e5;
+	display: inline-block;
+	height: 30px;
+	padding: 4px;
+	width: 396px;
+}
+.showActions{
+	display: inline-block;
+}
+
+.floatLeft{
+	float:left;
 }
 }
