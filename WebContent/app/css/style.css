@@ -1,5 +1,4 @@
-body{
-        font-family: 'Open Sans',sans-serif;
+body{   font-family: 'Open Sans',sans-serif;
         font-weight: 500;
         color: #757578;
         background-color: #fff;
@@ -54,7 +53,6 @@ body{
 	float: left;
     border-right: 1px solid #8EB3E5;
     min-height: 440px;
-    border-bottom: 1px solid #8EB3E5;
     
 }
 .scenarioIdDiv{
@@ -65,7 +63,6 @@ body{
 .rightContainer{
 	width:400px;
 	float:right;
-	border-bottom: 2px solid #8EB3E5;
 	margin-left:10px;
 	border-left:2px solid #8eb3e5;
 	 min-height: 440px;
@@ -160,7 +157,15 @@ div.dataTables_wrapper {
 	display: inline-block;
 }
 
+.resultContainer {height : 50px;
+    border: 1px solid #8EB3E5;
+    height: 100px;
+    margin-top: 440px;}
+
 .floatLeft{
 	float:left;
 }
 }
+
+
+
