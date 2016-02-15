@@ -1,7 +1,5 @@
 package com.bunit.ui.xml.to;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -23,21 +21,21 @@ public class Scenario {
 	@XmlElement(name = "STATUS")
 	public String STATUS;
 	
-	@XmlElement(name = "ACTION")
-	public List<Action> ACTION;
+	@XmlElement(name = "ACTIONLIST")
+	public ActionList ACTIONLIST;
 	
 	public Scenario(){
 		
 	}
 
 	public Scenario(String SCENARIOID, String DESC, String DATE, String USER,
-			String STATUS, List<Action> ACTION) {
+			String STATUS, ActionList ACTIONLIST) {
 		
 		this.SCENARIOID = SCENARIOID;
 		this.DESC = DESC;
 		this.DATE = DATE;
 		this.USER = USER;
 		this.STATUS = STATUS;
-		this.ACTION = ACTION;
+		this.ACTIONLIST = ACTIONLIST;
 	}
 }

@@ -13,10 +13,10 @@ import com.bunit.ui.xml.to.Scenario;
 
 public class BuintUtil {
 	
-	public void jaxbObjectToXML(SampleAction action, String fileName) {
+	public void jaxbObjectToXML(Scenario action, String fileName) {
 		 
         try {
-            JAXBContext context = JAXBContext.newInstance(SampleAction.class);
+            JAXBContext context = JAXBContext.newInstance(Scenario.class);
             Marshaller m = context.createMarshaller();
             //for pretty-print XML in JAXB
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -31,11 +31,11 @@ public class BuintUtil {
         }
     }
 	
-	public SampleAction convertXmlToObject(File file) throws Exception {
+	public Action convertXmlToObject(File file) throws Exception {
 
-		JAXBContext jaxbContext = JAXBContext.newInstance(SampleAction.class);
+		JAXBContext jaxbContext = JAXBContext.newInstance(Action.class);
 		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-		SampleAction action = (SampleAction) jaxbUnmarshaller.unmarshal(file);
+		Action action = (Action) jaxbUnmarshaller.unmarshal(file);
 
 		return action;
 	}

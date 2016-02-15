@@ -81,31 +81,33 @@
    <div style="width:1100px;">
       <div class="leftContainer">
                    <div class="margin6">SCENARIO BUILD AREA</div>
-                   <div class="scenarioIdDiv">Scenario-ID: 45 Date:01/20/2016 10:10</div>
+                   <div class="scenarioIdDiv">Scenario-ID: <span id="titleScenarioId"></span> 
+                    <span id="titleScenarioDate">Date : </span>
+                     </div>
                    <div class="actionDiv"><div class="configScenario">Config Scenario</div><div>Run Scenarion</div>
                     </div>
                     <div>
                     <table id="example" class="display nowrap" cellspacing="0" width="100%">
         <thead>
             <tr>
-                 <th>ActionId</th>
-                 <th>ActionName</th>
-			    <th>ActionDescription</th>
-			    <th>ActionType</th>
-			    <th>ActionDate</th>
-			    <th>Type</th>
+            	<th>ScenarioID</th>
+                <th>ActionId</th>
+                <th>ActionDescription</th>
+                <th>Input FList</th>
+			    <th>Output FList</th>
 			    <th>Status</th>
+			    <th>Button</th>			        
             </tr>
         </thead>
          <tbody>
             <tr>
+                <td id="scenarioId"></td>
                 <td id="actionId"></td>
-                <td id="actionName"></td>
                 <td id="actionDesc"></td>
-                <td id="actionType"></td>
-                <td id="actionDate"></td>
-                <td id="type"></td>
+                <td id="inputFList"></td>
+                <td id="outputFList"></td>
                 <td id="status"></td>
+                <td id="button"></td>
             </tr>
          </tbody>
             </table>
@@ -120,19 +122,19 @@
                    <div style="float:right;padding-right: 100px;">Opcode</div>
               </div>
               <div class="SlectedItemsDiv" style="background-color:#E0ECFF">
-                     <div id="id1" style="padding: 10px 0px; border: 1px solid;border-top:none;">
+                       <div id="id1" style="padding: 10px 0px; border: 1px solid;border-top:none;">
                         <div style="float: left; width: 20px;" class="openCloseTerms moduleClose">&nbsp</div>
-                         <div>Account Mgmt Opcodes</div>
+                        <div>Account Mgmt Opcodes</div>
                			</div>
                         <div class="toggleDiv"></div>
-               	    <div id="id2" style="padding: 10px 0px; border: 1px solid;border-top:none;">
+               	     <!--   <div id="id2" style="padding: 10px 0px; border: 1px solid;border-top:none;">
                			 <div style="float: left; width: 20px;" class="openCloseTerms moduleClose">&nbsp</div>
                          <div>Search Opcodes</div></div>
                          <div class="toggleDiv"></div>
-                <div id="id3" style="padding: 10px 0px; border: 1px solid;border-top:none;">
+                		 <div id="id3" style="padding: 10px 0px; border: 1px solid;border-top:none;">
                 		 <div style="float: left; width: 20px; " class="openCloseTerms moduleClose">&nbsp</div>
                          <div>Bill Mgmt</div></div>
-                         <div class="toggleDiv"></div>
+                         <div class="toggleDiv"></div> -->
                   </div>
        
     </div>

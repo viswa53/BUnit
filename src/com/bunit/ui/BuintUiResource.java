@@ -2,13 +2,15 @@ package com.bunit.ui;
 
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.bunit.ui.xml.to.SampleAction;
+import com.bunit.ui.xml.to.Action;
 import com.bunit.ui.xml.to.Scenario;
 import com.bunit.ui.xml.util.BuintUtil;
 
@@ -48,7 +50,7 @@ public class BuintUiResource {
 		String fileName = path + "\\" + genericFileName + (++fileCount) + ".xml";
 		
 		///BUNIT/BRMTestScenario001
-		SampleAction action = new SampleAction(10, null, "sample Desc1", null, null, null, null, null, null);
+		Scenario action = new Scenario("10", null, "sample Desc1", null, null, null);
 		
 		BuintUtil buintUtil = new BuintUtil();
 		buintUtil.jaxbObjectToXML(action, fileName);
@@ -59,19 +61,23 @@ public class BuintUiResource {
 	@GET
 	@Produces("application/json")
 	@Path("/get_actions")
-	public SampleAction getActions() throws Exception {
+	public List<Action> getActions() throws Exception {
 		
 		String tomcatHome = System.getProperty("catalina.base");
-		String path = tomcatHome + "\\BUNIT\\BRMTestScenario001";
+		String path = tomcatHome + "\\BUNIT\\ACTION_LIBRARY";
 		
 		System.out.println("Getting actoins from path : " + path);
+		
 		File directory = new File(path);
         //get all the files from a directory
         File[] fList = directory.listFiles();
-        SampleAction action = null;
         BuintUtil buintUtil = new BuintUtil();
-        File file = fList[0];
-        	action = buintUtil.convertXmlToObject(file);
+        
+        List<Action> action = new ArrayList<Action>();
+        
+        for(File file : fList) {
+        	action.add(buintUtil.convertXmlToObject(file));
+        }
         
 		return action;
 	}
@@ -82,7 +88,7 @@ public class BuintUiResource {
 	public Scenario openScenario() throws Exception {
 		
 		String tomcatHome = System.getProperty("catalina.base");
-		String path = tomcatHome + "\\BUNIT\\open";
+		String path = tomcatHome + "\\BUNIT\\BRMTestScenario001\\";
 		
 		System.out.println("Getting actoins from path : " + path);
 		File directory = new File(path);
@@ -90,9 +96,8 @@ public class BuintUiResource {
         File[] fList = directory.listFiles();
         Scenario scenario = null;
         BuintUtil buintUtil = new BuintUtil();
-        for (File file : fList){
-        	scenario = buintUtil.convertXmlToScenario(file);
-        }
+        File file = fList[0];
+        scenario = buintUtil.convertXmlToScenario(file);
         
 		return scenario;
 	}

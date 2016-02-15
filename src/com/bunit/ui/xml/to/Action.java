@@ -1,6 +1,13 @@
 package com.bunit.ui.xml.to;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name ="ACTION")
 public class Action {
+
+	public Data DATA;
+
+	public Input INPUT;
 	
 	public String ID;
 	
@@ -9,15 +16,19 @@ public class Action {
 	public String GROUP;
 	
 	public String STATUS;
-	
+
 	public Action(){
-		
+
 	}
-	public Action(String iD, String dESCRIPTION, String gROUP,
-			String sTATUS) {
-		this.ID = iD;
-		this.DESCRIPTION = dESCRIPTION;
-		this.GROUP = gROUP;
-		this.STATUS = sTATUS;
+
+	public Action(Data dATA, Input iNPUT, String iD, String dESCRIPTION,
+			String gROUP, String sTATUS) {
+		super();
+		DATA = dATA;
+		INPUT = iNPUT;
+		ID = iD;
+		DESCRIPTION = dESCRIPTION;
+		GROUP = gROUP;
+		STATUS = sTATUS;
 	}
 }
