@@ -3,8 +3,10 @@
 
 <!-- 	<script type="text/javascript" src="js/lib/jquery-1.7.1.js"></script>
 	<script type="text/javascript" src="js/lib/jquery-1.7.1.min.js"></script>
- -->	<script type="text/javascript" src="js/lib/jquery.dataTables.min.js"></script>
- <script type="text/javascript" src="js/lib/jquery2.js"></script>
+ -->	
+  <script type="text/javascript" src="js/lib/jquery2.js"></script>
+ <script type="text/javascript" src="js/lib/jquery.dataTables.min.js"></script>
+
 	<script type="text/javascript" src="js/lib/jquery.qtip.min.js"></script>
 	<script type="text/javascript" src="js/lib/jquery-ui-1.8.18.custom.min.js"></script>
 

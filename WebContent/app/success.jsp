@@ -78,7 +78,7 @@
 </nav>
    </div>
    <div class="bottomBorder">&nbsp;</div>
-   <div style="width:1100px;">
+   <div style="width:1100px;" class="mainContainer">
       <div class="leftContainer">
                    <div class="margin6">SCENARIO BUILD AREA</div>
                    <div class="scenarioIdDiv">Scenario-ID: <span id="titleScenarioId"></span> 

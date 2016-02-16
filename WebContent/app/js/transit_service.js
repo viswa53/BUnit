@@ -106,6 +106,34 @@
 						});
 				}
 				);
+	 
+	 $( ".leftContainer, .rightContainer, .resultContainer").resizable();
+	 
+	 $( ".ui-resizable" ).resizable({
+		 resize: function(event, ui) {
+			 var mainDiv = $('.mainContainer').width();
+			 if($(this).hasClass('leftContainer')){
+				 var currentDiv = $(this).width();
+				 var width = (mainDiv-currentDiv)-20;
+				 $('.rightContainer').css('width',width);
+			 }else if($(this).hasClass('rightContainer')){
+				 var currentDiv = $(this).width();
+				 var width = (mainDiv-currentDiv)-20;
+				 $('.leftContainer').css('width',width);
+			 }else if($(this).hasClass('resultContainer')){
+				 /*var leftHeight = $('.leftContainer').height();
+				 var rightHeight = $('.rightContainer').height();
+				 var resultHeight = $('.resultContainer').height();
+				 var containerHeight = $('#container').height();
+				 var height = containerHeight-resultHeight;
+				 var resultHeight1 = containerHeight-leftHeight;
+				 $('.leftContainer,.rightContainer').css('height',height);
+				 $('.resultContainer').css('height',resultHeight1);*/
+			 }
+		 }
+	 });
+	 
+	 
   });
 
   
