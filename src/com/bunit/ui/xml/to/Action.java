@@ -2,6 +2,7 @@ package com.bunit.ui.xml.to;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+
 @XmlRootElement(name ="ACTION")
 public class Action {
 
