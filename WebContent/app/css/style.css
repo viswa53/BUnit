@@ -150,7 +150,7 @@ body{   font-family: 'Open Sans',sans-serif;
 	float:left;
 }
 
-.search-table-outter {border:2px solid red;}
+.search-table-outter {border:2px solid red;  height: 352px;}
 .search-table{table-layout: fixed; margin:40px auto 0px auto; }
 .search-table, td, th{border-collapse:collapse; border:1px solid #777;}
 th{padding:20px 7px; font-size:15px; color:#444; background:#66C2E0;}
