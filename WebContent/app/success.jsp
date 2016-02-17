@@ -80,19 +80,34 @@
    <div class="bottomBorder">&nbsp;</div>
    <div style="width:1100px;" class="mainContainer">
       <div class="leftContainer">
-                   <div class="margin6">SCENARIO BUILD AREA</div>
+                   <div class="margin6"><div class="checkImg">&nbsp;</div>SCENARIO BUILD AREA</div>
                    <div class="scenarioIdDiv">Scenario-ID: <span id="titleScenarioId"></span> 
                     <span id="titleScenarioDate">Date : </span>
                      </div>
-                   <div class="actionDiv"><div class="configScenario">Config Scenario</div><div>Run Scenarion</div>
+                   <div class="actionDiv"><div class="plusImg">&nbsp;</div><div class="configScenario">Config Scenario</div><div class="minusImg">&nbsp;</div><div>Run Scenarion</div>
                     </div>
                     <div>
-                    <table id="example" class="display nowrap" cellspacing="0" width="100%">
+                    
+                    <div class="search-table-outter wrapper">
+	<table class="search-table inner">
+		<tr>
+			   <th>ScenarioID</th>
+                <th>ActionId</th>
+                <th>ActionId</th>
+                <th>Input FList</th>
+			    <th>Output FList</th>
+			    <th>Status</th>
+			    <th>Button</th>			        
+            </tr>
+		 
+               
+               </table>     
+         <!--          <table id="example" class="display nowrap" cellspacing="0" width="100%">
         <thead>
             <tr>
             	<th>ScenarioID</th>
                 <th>ActionId</th>
-                <th>ActionDescription</th>
+                <th>ActionId</th>
                 <th>Input FList</th>
 			    <th>Output FList</th>
 			    <th>Status</th>
@@ -110,10 +125,11 @@
                 <td id="button"></td>
             </tr>
          </tbody>
-            </table>
+            </table> -->  
                        
         </div>
     </div> 
+    </div>
       <div class="rightContainer">
           <div class="margin6"> ACTION WIDGETS</div>
              <div class="actionRightDiv">
@@ -121,31 +137,19 @@
                    <div style="float:left">Action Description</div>
                    <div style="float:right;padding-right: 100px;">Opcode</div>
               </div>
-              <div class="SlectedItemsDiv" style="background-color:#E0ECFF">
-                       <div id="id1" style="padding: 10px 0px; border: 1px solid;border-top:none;">
-                        <div style="float: left; width: 20px;" class="openCloseTerms moduleClose">&nbsp</div>
-                        <div>Account Mgmt Opcodes</div>
-               			</div>
-                        <div class="toggleDiv"></div>
-               	     <!--   <div id="id2" style="padding: 10px 0px; border: 1px solid;border-top:none;">
-               			 <div style="float: left; width: 20px;" class="openCloseTerms moduleClose">&nbsp</div>
-                         <div>Search Opcodes</div></div>
-                         <div class="toggleDiv"></div>
-                		 <div id="id3" style="padding: 10px 0px; border: 1px solid;border-top:none;">
-                		 <div style="float: left; width: 20px; " class="openCloseTerms moduleClose">&nbsp</div>
-                         <div>Bill Mgmt</div></div>
-                         <div class="toggleDiv"></div> -->
-                  </div>
+              <div class="selectedItemsDiv" style="background-color:#E0ECFF">
+               </div>
        
     </div>
     
-      </div>
-      
-      <div class="resultContainer">
+   </div>
+   </div>
+   <div>
+   <div class="clear"></div>
+    <div id="bottomContainer">
       	<center><b> TEST RESULTS LOGS </b></center>
     </div>
-    
-   </div>
+    </div>
    
    <!-- <div class="parent">
     <div class="child"></div>

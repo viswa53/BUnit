@@ -2,39 +2,37 @@
   	/*$('.rightContainer').resizable({
     handles: 'w',maxWidth : $('.rightContainer').width()
   	});*/
-  	
- 
-	$('#example').DataTable( {
-        "scrollY": 200,
-        "scrollX": true,
-         paging: false,
-         searching: false
-    } );
-	
-	
-	$('.openCloseTerms').click(function () {
-
 		$.ajax({
-			url: "/sample/rest/bunit/get_actions",
+			url: "/buint/rest/bunit/get_actions",
 			context: document.body
 		}).done(function(response) {
-			console.log(response);
-			$("#actionID").text(response.ActionId);
-			$("#description").text(response.ActionDescription);
-		});
-		
-		$(this).toggleClass('moduleClose');
-		if($(this).hasClass('moduleClose')){
-			$(this).parent().next().find('.selectedItem').remove();
-		} else {
-			$(this).parent().next().append('<div class="clear"></div><div class="selectedItem" ><div class="showActions"  style="width: 398px; padding: 4px; border: 1px dashed;">'
-					+ '<div id="actionID" style="float: left; width: 258px;">SampleId</div>'
-					+ '<div id="description">Sample DEsc</div>'
-					+ '</div><div class="clear"></div>');
+			for (var key in response) {
+				console.log(key);
+				  if (response.hasOwnProperty(key)) {
+				     $('.selectedItemsDiv').append('<div class="openCloseImg" id="img_'+key+'" style="padding: 4px 0px; border: 1px solid;border-top:none;">'
+                    + '<div style="float: left; width: 20px;" class="openCloseTerms moduleClose">&nbsp;</div>'
+                    + ' <div class="title">'+key+'</div><div class="toggle hide"></div></div>');
+				     var actionList =response[key];
+				     for (var i=0;i<actionList.length;i++){
+				    	 $('.selectedItemsDiv').find("#img_"+key+"").find('.toggle').append('<div class="clear"></div><div class="selectedItem " id="img_'+key+'"><div class="showActions"  style="width: 372px; padding: 4px;">'
+									+ '<div id="actionID"  class="wordWrap" style="float: left; width: 230px;">'+actionList[i].id+'</div>'
+									+ '<div id="description"  class="wordWrap">'+actionList[i].desc+'</div>'
+									+ '</div><div class="clear"></div>');
+				    	    }
+				    }
+				}
 			
-		}
-	        
-     });
+		});
+ 
+		$('.selectedItemsDiv').delegate(".openCloseImg .openCloseTerms","click",function () {
+			$(this).toggleClass('moduleClose');
+			if($(this).hasClass('moduleClose')){
+				$(this).next().next().addClass('hide');
+			} else {
+				$(this).next().next().removeClass('hide');
+			}
+
+		});
 	
 	
 	
@@ -44,7 +42,7 @@
 	 */
 	
 	$.ajax({
-		url: "/sample/rest/bunit/get_actions",
+		url: "/buint/rest/bunit/get_actions",
 		context: document.body
 	}).done(function(actions) {
 		console.log(actions);
@@ -79,7 +77,7 @@
 	$("#newScenario").click(
 			function() {
 					$.ajax({
-						url: "/sample/rest/bunit/newScenario",
+						url: "/buint/rest/bunit/newScenario",
 						context: document.body
 					}).done(function() {
 						
@@ -90,24 +88,22 @@
 	 $("#openScenario").click(
 				function() {
 						$.ajax({
-							url: "/sample/rest/bunit/open_scenario",
+							url: "/buint/rest/bunit/open_scenario",
 							context: document.body
 						}).done(function(response) {
-							var actionInfo = response.ACTIONLIST.ACTION[0];
-							$("#titleScenarioId").text(response.SCENARIOID);
-							$("#titleScenarioDate").append(response.DATE);
-							$("#scenarioId").text(response.SCENARIOID);
-							$("#actionId").text(actionInfo.ID);
-							$("#actionDesc").text(actionInfo.DESCRIPTION);
-							$("#inputFList").text("sampleIFlist");
-							$("#outputFList").text("sampleOFList");
-							$("#status").text(response.STATUS);
-							$("#button").append("<button class='btn btn-primary'>Run </button>");
+							for(var i=0;i<3;i++){
+								var actionInfo = response.ACTIONLIST.ACTION[0];
+								$('.search-table').append('<tr><td class="wordWarp">'+response.SCENARIOID+'</td><td  class="wordWarp">'+actionInfo.ID+'</td>'+
+										+ '<td  class="wordWarp">'+actionInfo.DESCRIPTION+'</td>'
+										+ '<td  class="wordWarp">sampleIFlist</td><td  class="wordWarp">sampleOFList</td><td  class="wordWarp">sampleOFList</td>'
+										+ '<td  class="wordWarp">'+response.STATUS+'</td><td><button class="btn btn-primary">Run</button></tr>');
+							}
+			            
 						});
 				}
 				);
 	 
-	 $( ".leftContainer, .rightContainer, .resultContainer").resizable();
+//	 $( ".leftContainer, .rightContainer, .resultContainer").resizable();
 	 
 	 $( ".ui-resizable" ).resizable({
 		 resize: function(event, ui) {
