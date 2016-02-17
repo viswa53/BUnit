@@ -147,7 +147,7 @@
    <div>
    <div class="clear"></div>
     <div id="bottomContainer">
-      	<center><b> TEST RESULTS LOGS </b></center>
+      <div style=" margin-top: 10px;text-align: center;font-weight: bold;">TEST RESULTS LOGS</div>
     </div>
     </div>
    
