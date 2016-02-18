@@ -81,17 +81,20 @@
 						context: document.body
 					}).done(function(response) {
 							console.log(response);
-							
+
 					});
 					$(".tableData").hide();
 					$("#titleScenarioId").text("");
 					$("#titleScenarioDate").text("Date :");
-	
+
 			}
 			);
 
 	 $("#openScenario").click(
+
 				function() {
+					var filePath= encodeURI('file:///E:/tom/BUNIT/BRMTestScenario001');
+					window.open(filePath, 'Buint Scenarios', 'left=700,top=700,width=200,height=200,toolbar=0,status=0,location=0,menubar=0,scrollbars=0,titlebar=0');
 						$.ajax({
 							url: "/bunit/rest/bunit/open_scenario",
 							context: document.body

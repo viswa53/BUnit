@@ -1,3 +1,4 @@
+<%@page import="java.io.File"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -11,13 +12,18 @@
 	<link href="css/style.css" type="text/css" rel="stylesheet">
 	<link href="css/responsive.css" type="text/css" rel="stylesheet">
 	<!--<link type="text/css" rel="stylesheet" href="css/lib/normalize.css">
-    <link type="text/css" rel="stylesheet" href="css/lib/layout-default-latest.css"> -->   
+    <link type="text/css" rel="stylesheet" href="css/lib/layout-default-latest.css"> -->
 	<link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css rel="stylesheet">
 	<link href="css/lib/font-awesome.min.css" type="text/css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Sanchez" rel="stylesheet">
 	<script> window.history.forward(1);</script>
-	
+
 </head>
+<script type="text/javascript">
+<% String str = System.getProperty("catalina.base") + "\\BUNIT\\BRMTestScenario001"; %>
+var filePath = "<%= str %>";
+window.alert(filePath);
+</script>
 <body>
 
 <%@ include file="/app/inc/header.jsp" %>
@@ -30,7 +36,7 @@
     <nav class="navbar navbar-inverse">
   <div class="container-fluid">
       <ul class="nav navbar-nav">
-     
+
        <li class="dropdown homeDropDown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Home
         <span class="caret"></span></a>
@@ -39,7 +45,7 @@
           <li><a href="#">Page 2</a></li>
         </ul>
       </li>
-      
+
       <li class="dropdown testdropDown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Test Scenario
         <span class="caret"></span></a>
@@ -62,7 +68,7 @@
         <ul class="dropdown-menu">
           <li><a href="#">Page 1</a></li>
           <li><a href="#">Page 2</a></li>
-         
+
         </ul>
       </li>
       <li class="dropdown aboutDropDown">
@@ -81,13 +87,13 @@
    <div style="width:1100px;" class="mainContainer">
       <div class="leftContainer">
                    <div class="margin6"><div class="checkImg">&nbsp;</div>SCENARIO BUILD AREA</div>
-                   <div class="scenarioIdDiv">Scenario-ID: <span id="titleScenarioId"></span> 
+                   <div class="scenarioIdDiv">Scenario-ID: <span id="titleScenarioId"></span>
                     <span id="titleScenarioDate">Date : </span>
                      </div>
                    <div class="actionDiv"><div class="plusImg">&nbsp;</div><div class="configScenario">Config Scenario</div><div class="minusImg">&nbsp;</div><div>Run Scenarion</div>
                     </div>
                     <div>
-                    
+
                     <div class="search-table-outter wrapper">
 	<table class="search-table inner">
 		<tr>
@@ -97,11 +103,11 @@
                 <th>Input FList</th>
 			    <th>Output FList</th>
 			    <th>Status</th>
-			    <th>Button</th>			        
+			    <th>Button</th>
             </tr>
-		 
-               
-               </table>     
+
+
+               </table>
          <!--          <table id="example" class="display nowrap" cellspacing="0" width="100%">
         <thead>
             <tr>
@@ -111,7 +117,7 @@
                 <th>Input FList</th>
 			    <th>Output FList</th>
 			    <th>Status</th>
-			    <th>Button</th>			        
+			    <th>Button</th>
             </tr>
         </thead>
          <tbody>
@@ -125,10 +131,10 @@
                 <td id="button"></td>
             </tr>
          </tbody>
-            </table> -->  
-                       
+            </table> -->
+
         </div>
-    </div> 
+    </div>
     </div>
       <div class="rightContainer">
           <div class="margin6"> ACTION WIDGETS</div>
@@ -139,9 +145,9 @@
               </div>
               <div class="selectedItemsDiv" style="background-color:#E0ECFF">
                </div>
-       
+
     </div>
-    
+
    </div>
    </div>
    <div>
@@ -150,7 +156,7 @@
       <div style=" margin-top: 10px;text-align: center;font-weight: bold;">TEST RESULTS LOGS</div>
     </div>
     </div>
-   
+
    <!-- <div class="parent">
     <div class="child"></div>
 </div> -->
