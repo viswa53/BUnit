@@ -3,7 +3,7 @@
     handles: 'w',maxWidth : $('.rightContainer').width()
   	});*/
 		$.ajax({
-			url: "/buint/rest/bunit/get_actions",
+			url: "/bunit/rest/bunit/get_actions",
 			context: document.body
 		}).done(function(response) {
 			for (var key in response) {
@@ -21,9 +21,9 @@
 				    	    }
 				    }
 				}
-			
+
 		});
- 
+
 		$('.selectedItemsDiv').delegate(".openCloseImg .openCloseTerms","click",function () {
 			$(this).toggleClass('moduleClose');
 			if($(this).hasClass('moduleClose')){
@@ -33,15 +33,15 @@
 			}
 
 		});
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Rest calls
 	 */
-	
-	$.ajax({
+
+	/*$.ajax({
 		url: "/buint/rest/bunit/get_actions",
 		context: document.body
 	}).done(function(actions) {
@@ -49,62 +49,69 @@
 		var id = 'id';
 		var count = 0;
 		var action = actions.ACTION;
-		
-		$.each(action, function(index, value) { 
+
+		$.each(action, function(index, value) {
 			console.log(value);
-			
-			/*var data = '<div id='+  id + (++count) +' style="padding: 10px 0px; border: 1px solid;border-top:none;">' +
+
+			var data = '<div id='+  id + (++count) +' style="padding: 10px 0px; border: 1px solid;border-top:none;">' +
 			'<div style="float: left; width: 20px;" class="openCloseTerms moduleClose">&nbsp</div>' +
 			'<div>' + value.DATA.GROUP + '</div>' +
 			'</div>' +
 			'<div class="toggleDiv"></div>';
-			
+
 			var toggleData = '<div class="clear"></div><div class="selectedItem" ><div class="showActions"  style="width: 398px; padding: 4px; border: 1px dashed;">'
 				+ '<div id="actionID" style="float: left; width: 258px;">new</div>'
 				+ '<div id="description">viswa</div>'
 				+ '</div><div class="clear"></div>';
-			
+
 			$(".SlectedItemsDiv").append(data+toggleData);
 			$('.openCloseTerms').toggleClass('moduleClose');
-*/			
 
-			
+
+
 		});
 	});
-	
-	
-	
+*/
+
+
 	$("#newScenario").click(
 			function() {
 					$.ajax({
-						url: "/buint/rest/bunit/newScenario",
+						url: "/bunit/rest/bunit/newScenario",
 						context: document.body
-					}).done(function() {
-						
+					}).done(function(response) {
+							console.log(response);
+							
 					});
+					$(".tableData").hide();
+					$("#titleScenarioId").text("");
+					$("#titleScenarioDate").text("Date :");
+	
 			}
 			);
-	 
+
 	 $("#openScenario").click(
 				function() {
 						$.ajax({
-							url: "/buint/rest/bunit/open_scenario",
+							url: "/bunit/rest/bunit/open_scenario",
 							context: document.body
 						}).done(function(response) {
+							$("#titleScenarioId").text(response.SCENARIOID);
+							$("#titleScenarioDate").append(response.DATE);
 							for(var i=0;i<3;i++){
 								var actionInfo = response.ACTIONLIST.ACTION[0];
-								$('.search-table').append('<tr><td class="wordWarp">'+response.SCENARIOID+'</td><td  class="wordWarp">'+actionInfo.ID+'</td>'+
+								$('.search-table').append('<tr class="tableData"><td class="wordWarp">'+response.SCENARIOID+'</td><td  class="wordWarp">'+actionInfo.ID+'</td>'+
 										+ '<td  class="wordWarp">'+actionInfo.DESCRIPTION+'</td>'
 										+ '<td  class="wordWarp">sampleIFlist</td><td  class="wordWarp">sampleOFList</td><td  class="wordWarp">sampleOFList</td>'
 										+ '<td  class="wordWarp">'+response.STATUS+'</td><td><button class="btn btn-primary">Run</button></tr>');
 							}
-			            
+
 						});
 				}
 				);
-	 
+
 //	 $( ".leftContainer, .rightContainer, .resultContainer").resizable();
-	 
+
 	 $( ".ui-resizable" ).resizable({
 		 resize: function(event, ui) {
 			 var mainDiv = $('.mainContainer').width();
@@ -128,8 +135,7 @@
 			 }
 		 }
 	 });
-	 
-	 
+
+
   });
 
-  
