@@ -66,8 +66,8 @@ public class BuintUiResource {
 		BUnitService unitService  = new BUnitService();
 
 		Gson gson = new Gson();
-		String jsonString = gson.toJson(unitService.getActions());
-
+//		String jsonString = gson.toJson(unitService.getActions());
+		String jsonString = "{\"total\":7,\"rows\":[{\"name\":\"Create Acct with Default Plan and Paytype\",\"value\":\"PCM_OP_CUST_COMMIT_CUSTOMER\",\"group\":\"Acct Mgmt Opcodes\",\"editor\":\"label\"},{\"name\":\"AddOn Deal\",\"value\":\"PCM_OP_ADD_DEAL\",\"group\":\"Acct Mgmt Opcodes\",\"editor\":\"label\"},	{\"name\":\"Search Items\",\"value\":\"PCM_OP_SEARCH\",\"group\":\"Search Opcodes\",\"editor\":\"label\"},	{\"name\":\"Search Plans\",\"value\":\"PCM_OP_SEARCH\",\"group\":\"Search Opcodes\",\"editor\":\"label\"},	{\"name\":\"Read Functions\",\"value\":\"PCM_OP_READ_OBJ\",\"group\":\"Read Storable Object\",\"editor\":\"label\"},	{\"name\":\"Billing\",\"value\":\"PCM_OP_BILL_MAKE_BILL\",\"group\":\"Bill Mgmt\",\"editor\":\"label\"},	{\"name\":\"Payment\",\"value\":\"PCM_OP_PAYMENT_COLLECT\",\"group\":\"Payment Mgmt\",\"editor\":\"label\"},	{\"name\":\"AR Activity\",\"value\":\"PCM_OP_AR_ITEM_ADJUSTMENT\",\"group\":\"Payment Mgmt\",\"editor\":\"label\"}]}";
 		return Response.ok().entity(jsonString).build();
 	}
 
