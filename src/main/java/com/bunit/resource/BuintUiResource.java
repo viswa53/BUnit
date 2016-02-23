@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.bunit.response.to.ScenarioResponse;
 import com.bunit.service.BUnitService;
 import com.bunit.util.BuintUtil;
 import com.bunit.xml.to.Action;
@@ -51,7 +52,7 @@ public class BuintUiResource {
 	@GET
 	@Produces("application/json")
 	@Path("/open_scenario/{scenario_name}")
-	public Scenario openScenario(@PathParam("scenario_name") String  scenarioName) throws Exception {
+	public ScenarioResponse openScenario(@PathParam("scenario_name") String  scenarioName) throws Exception {
 
 		return bUnitService.openScenario(scenarioName);
 	}
@@ -64,13 +65,13 @@ public class BuintUiResource {
 		return bUnitService.getScenario();
 	}
 
-	@POST
+	@GET
 	@Produces("application/json")
-	@Path("/drag/{scenario_id}")
-	public Scenario dragScenario(@PathParam("scenario_id") String scenarioId, Action action) 
+	@Path("/drag/{action_id}/{scenario_id}")
+	public ScenarioResponse dragScenario(@PathParam("action_id") String actionId, @PathParam("scenario_id") String scenarioId) 
 			throws Exception {
 
-		return bUnitService.dragScenario(scenarioId, action);
+		return bUnitService.dragScenario(actionId, scenarioId);
 	}
 	
 	@POST

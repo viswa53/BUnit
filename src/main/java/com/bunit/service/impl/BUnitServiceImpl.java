@@ -1,24 +1,24 @@
 package com.bunit.service.impl;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.attribute.BasicFileAttributeView;
-import java.nio.file.attribute.BasicFileAttributes;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.bunit.response.to.ActionInfo;
+import com.bunit.response.to.ActionResponse;
+import com.bunit.response.to.ScenarioInfo;
+import com.bunit.response.to.ScenarioResponse;
 import com.bunit.service.BUnitService;
 import com.bunit.util.BuintUtil;
 import com.bunit.xml.to.Action;
+import com.bunit.xml.to.ActionList;
 import com.bunit.xml.to.Scenario;
-import com.bunit.xml.to.Source;
 
 @Service
 public class BUnitServiceImpl implements BUnitService {
@@ -32,7 +32,7 @@ public class BUnitServiceImpl implements BUnitService {
 	@Value("${ACTION_LIBRARY_FILE_PATH}")
 	private String actionLibraryFilePath;
 
-	public Map<String, List<Source>> getActions() throws Exception {
+	public ActionResponse getActions() throws Exception {
 
 		String tomcatHome = System.getProperty("catalina.base");
 		String path = tomcatHome + actionLibraryFilePath;
@@ -44,31 +44,25 @@ public class BUnitServiceImpl implements BUnitService {
 		File[] fList = directory.listFiles();
 		BuintUtil buintUtil = new BuintUtil();
 
-		Map<String, List<Source>> map =  new HashMap<String, List<Source>>();
-
+		ActionResponse source = new ActionResponse();
+		List<ActionInfo> actionList = new ArrayList<ActionInfo>();
 		for(File file : fList) {
 
 			Action action = buintUtil.convertXmlToAction(file);
-			action.actionFileName = file.getName();
-
-			Source source = new Source();
-			source.setId(action.DATA.ID);
-			source.setDesc(action.DATA.DESCRIPTION);
-			source.setScenarioId(action.DATA.SCENARIOID);
-			source.setAction(action);
-
-			if(map.containsKey(action.DATA.GROUP)) {
-				List<Source> sources = map.get(action.DATA.GROUP);
-				sources.add(source);
-			} else {
-				List<Source> newSource = new ArrayList<Source>();
-				newSource.add(source);
-
-				map.put(action.DATA.GROUP, newSource);
-			}
-
+			
+			ActionInfo actionInfo = new ActionInfo();
+			actionInfo.setActionId(action.DATA.ID);
+			actionInfo.setActionDesc(action.DATA.DESCRIPTION);
+			actionInfo.setGroup(action.DATA.GROUP);
+			
+			actionList.add(actionInfo);
+			
 		}
-		return map;
+		
+		source.setRows(actionList);
+		source.setTotal(actionList.size());
+		
+		return source;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -90,22 +84,25 @@ public class BUnitServiceImpl implements BUnitService {
 
 		String genericFileName = "BRMTestScenario";
 		Integer fileCount =  file.list()  != null ? file.list().length : 0;
-
-		String fileName = path + "\\" + genericFileName + (++fileCount) + ".xml";
-
+		
+		String scenarioId = genericFileName + (++fileCount);
+		String fileName = path + "\\" + scenarioId  + ".xml";
+		
+		//01/20/2016 10:10
+		Date createDate = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY HH:mm");
+		dateFormat.format(createDate);
 		///BUNIT/BRMTestScenario001
-		Scenario action = new Scenario("10", null, "sample Desc1", null, null, null);
+		Scenario scenario = new Scenario();
+		scenario.SCENARIOID = scenarioId;
+		scenario.DATE = dateFormat.format(createDate);
 
-		File newScenarioFile = buintUtil.jaxbScenarioToXML(action, fileName);
-
-		java.nio.file.Path paths = Paths.get(newScenarioFile.getAbsoluteFile().toURI());
-		BasicFileAttributes view = Files.getFileAttributeView(paths, BasicFileAttributeView.class)
-				.readAttributes();
-		List fileInfo = new ArrayList();
-		fileInfo.add(newScenarioFile.getName());
-		fileInfo.add(view.creationTime().toMillis());
-
-		return fileInfo;
+		buintUtil.jaxbScenarioToXML(scenario, fileName);
+		List response = new ArrayList();
+		response.add(scenarioId);
+		response.add(dateFormat.format(createDate));
+		
+		return response;
 	}
 
 	public Scenario editScenarioInput(String scenarioId, Action action) throws Exception {
@@ -130,28 +127,64 @@ public class BUnitServiceImpl implements BUnitService {
 		return scenario;
 	}
 
-	public Scenario dragScenario(String scenarioId, Action action) throws Exception {
+	public ScenarioResponse dragScenario(String actionId, String scenarioId) throws Exception {
 
 		String tomcatHome = System.getProperty("catalina.base");
-		String path = tomcatHome + scenarioFilePath + "\\" + scenarioId;
+		String path = tomcatHome + actionLibraryFilePath;
+		
+		String scenarioPath = tomcatHome + scenarioFilePath + "\\" + scenarioId + ".xml";
+		
+		System.out.println("Action path : "+ path);
+		System.out.println("Scenario path : "+ scenarioPath);
+		
+		File[] actionFiles = new File(path).listFiles();
+		List<ScenarioInfo> scenarioInfos = new ArrayList<ScenarioInfo>();
+		for(File actionFile : actionFiles) {
+			Action action = buintUtil.convertXmlToAction(actionFile);
+			
+			System.out.println("Action ID : "+ action.DATA.ID + " File name : "+ actionFile.getName());
+			if(actionId.equals(action.DATA.ID)) {
+				
+				Scenario scenario = buintUtil.convertXmlToScenario(new File(scenarioPath));
+				
+				List<Action> actionList = new ArrayList<Action>();
+				Action action2Save = new Action();
+				
+				action2Save.ID = action.DATA.ID;
+				action2Save.DESCRIPTION = action.DATA.DESCRIPTION;
+				action2Save.STATUS = action.DATA.STATUS;
+				actionList.add(action2Save);
+				
+				if(scenario.ACTIONLIST == null || scenario.ACTIONLIST.ACTION == null) {
+					ActionList actionList2Save = new ActionList(actionList);
+					scenario.ACTIONLIST = actionList2Save;
+				} else {
+					scenario.ACTIONLIST.ACTION.add(action2Save);
+				}
+				
+				System.out.println(scenario.ACTIONLIST.ACTION);
+				
+				buintUtil.jaxbScenarioToXML(scenario, scenarioPath);
+				
+				ScenarioInfo scenarioInfo = new ScenarioInfo();
+				scenarioInfo.setActionID(action.DATA.ID);
+				scenarioInfo.setActionDescription(action.DATA.DESCRIPTION);
+				scenarioInfo.setInputFlist("InputFList");
+				scenarioInfo.setOutputFlist("OutputFlist");
+				scenarioInfo.setButton("button");
+				scenarioInfo.setScenarioID(scenario.SCENARIOID);
+				scenarioInfo.setStatus(scenario.STATUS);
+				
+				scenarioInfos.add(scenarioInfo);
+				break;
+			}
+		}
+		
+		ScenarioResponse scenarioResponse = new ScenarioResponse();
+		scenarioResponse.setRows(scenarioInfos);
+		scenarioResponse.setTotal(scenarioInfos.size());
 
-		File scenarioFileName = new File(path);
-
-		Scenario scenario = buintUtil.convertXmlToScenario(scenarioFileName);
-		List<Action> scenarioActionList = scenario.ACTIONLIST.ACTION;
-
-		scenarioActionList.add(action);
-
-		String actionFileName = tomcatHome + actionLibraryFilePath + "\\" + action.actionFileName;
-
-		action = buintUtil.convertXmlToAction(new File(actionFileName));
-		action.DATA.SCENARIOID = scenario.SCENARIOID;
-		System.out.println(action);
-		System.out.println("***************" + actionFileName);
-		buintUtil.convertActionToXml(action, actionFileName);
-
-		buintUtil.jaxbScenarioToXML(scenario, path);
-		return scenario;
+		return scenarioResponse;
 	}
 
 	public Scenario deleteScenario(String scenarioId, Action action) throws Exception {
@@ -176,15 +209,35 @@ public class BUnitServiceImpl implements BUnitService {
 		return scenario;
 	}
 
-	public Scenario openScenario(String scenarioName) throws Exception {
+	public ScenarioResponse openScenario(String scenarioName) throws Exception {
 
 		String tomcatHome = System.getProperty("catalina.base");
 		String path = tomcatHome + scenarioFilePath + "\\" +scenarioName;
 
 		System.out.println("Getting scenario from path : " + path);
 		File directory = new File(path);
+		
+		Scenario scenario = buintUtil.convertXmlToScenario(directory);
+		List<ScenarioInfo> scenarioInfos = new ArrayList<ScenarioInfo>();
+		ScenarioResponse scenarioResponse = new ScenarioResponse();
+		for(Action action : scenario.ACTIONLIST.ACTION) {
+			
+			ScenarioInfo scenarioInfo = new ScenarioInfo();
+			scenarioInfo.setActionID(action.ID);
+			scenarioInfo.setActionDescription(action.DESCRIPTION);
+			scenarioInfo.setInputFlist("InputFList");
+			scenarioInfo.setOutputFlist("OutputFlist");
+			scenarioInfo.setButton("button");
+			scenarioInfo.setScenarioID(scenario.SCENARIOID);
+			scenarioInfo.setStatus(scenario.STATUS);
+			
+			scenarioInfos.add(scenarioInfo);
+		}
+		
+		scenarioResponse.setRows(scenarioInfos);
+		scenarioResponse.setTotal(scenarioInfos.size());
 
-		return buintUtil.convertXmlToScenario(directory);
+		return scenarioResponse;
 	}
 
 	public List<String> getScenario() {
