@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ACTION>
+    <DATA>
+        <ID>PCM_OP_READ_BILLINFO</ID>
+        <DESCRIPTION>Read Billinfo Object</DESCRIPTION>
+        <OPCODE>PCM_OP_READ_FLDS</OPCODE>
+        <SCENARIOID>TestScenario001</SCENARIOID>
+        <TYPE>OPCODE</TYPE>
+        <GROUP>BASE</GROUP>
+        <STATUS>XXXX</STATUS>
+    </DATA>
+    <INPUT>
+        <FLIST>
+            <DEAL_INFO>
+                <PRODUCTS elem="0">
+                    <USAGE_END_OFFSET>0</USAGE_END_OFFSET>
+                    <USAGE_END_UNIT>0</USAGE_END_UNIT>
+                </PRODUCTS>
+            </DEAL_INFO>
+            <POID>0.0.0.1 /account 396683 7</POID>
+            <PROGRAM_NAME>Customer Center</PROGRAM_NAME>
+            <SERVICE_OBJ>0.0.0.1 /service/telco/gsm/telephony 395595 9</SERVICE_OBJ>
+        </FLIST>
+    </INPUT>
+    <OUTPUT>
+        <FLIST>
+            <ACCOUNT_OBJ>0.0.0.1 /account 108292 0</ACCOUNT_OBJ>
+            <END_T>1514782800</END_T>
+            <ACCTINFO elem="0">
+                <POID>0.0.0.1 /account -1 0</POID>
+            </ACCTINFO>
+            <BAL_INFO elem="0">
+                <BILLINFO_OBJ>0.0.0.1 /billinfo 108676 0</BILLINFO_OBJ>
+                <NAME>Default Balance Group</NAME>
+                <POID>0.0.0.1 /balance_group 107140 0</POID>
+            </BAL_INFO>
+            <BILLINFO elem="0">
+                <BAL_GRP_OBJ>0.0.0.1 /balance_group 109188 0</BAL_GRP_OBJ>
+                <BILLINFO_ID>BILL UNIT(1)</BILLINFO_ID>
+                <BILL_WHEN>1</BILL_WHEN>
+                <CURRENCY>840</CURRENCY>
+                <CURRENCY_SECONDARY>0</CURRENCY_SECONDARY>
+                <EFFECTIVE_T>1514782800</EFFECTIVE_T>
+                <PAYINFO_OBJ>0.0.0.1 /payinfo/invoice 110340 0</PAYINFO_OBJ>
+                <STATUS>10100</STATUS>
+                <PAY_TYPE>10001</PAY_TYPE>
+                <POID>0.0.0.1 /billinfo 108676 0</POID>
+            </BILLINFO>
+            <NAMEINFO elem="1">
+                <ADDRESS>100 SW 1st Ave</ADDRESS>
+                <CANON_COUNTRY>US</CANON_COUNTRY>
+                <CITY>Miami</CITY>
+                <COMPANY></COMPANY>
+                <CONTACT_TYPE>Billing</CONTACT_TYPE>
+                <COUNTRY>USA</COUNTRY>
+                <ELEMENT_ID>1</ELEMENT_ID>
+                <EMAIL_ADDR>DoNotReply@siriusxm.com</EMAIL_ADDR>
+                <FIRST_NAME>SiriusXM</FIRST_NAME>
+                <LAST_NAME>DEMO_READ_FLDS_001.001</LAST_NAME>
+                <MIDDLE_NAME></MIDDLE_NAME>
+                <PHONES elem="1">
+                    <PHONE>609-977-5369</PHONE>
+                    <TYPE>2</TYPE>
+                </PHONES>
+                <SALUTATION></SALUTATION>
+                <STATE>FL</STATE>
+                <ZIP>33130</ZIP>
+            </NAMEINFO>
+        </FLIST>
+    </OUTPUT>
+</ACTION>

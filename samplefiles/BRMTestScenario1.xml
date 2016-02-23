@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SCENARIO>
+    <SCENARIOID>TestScenario001</SCENARIOID>
+    <DESC>Venkat Test for Acct Creation</DESC>
+    <DATE>201602121010</DATE>
+    <USER>TesterVenkat</USER>
+    <STATUS>TestComplete</STATUS>
+    <ACTIONLIST>
+        <ACTION>
+            <ID>CUST_COMMIT_CUSTOMER</ID>
+            <DESCRIPTION>test desc</DESCRIPTION>
+			<STATUS>Completed</STATUS>
+        </ACTION>
+        <ACTION>
+            <ID>READ_BILLINFO</ID>
+            <DESCRIPTION>Read Billinfo Object</DESCRIPTION>
+            <GROUP>BASE</GROUP>
+            <STATUS>FAILED</STATUS>
+        </ACTION>
+        <ACTION>
+            <actionFileName>ACTION.xml</actionFileName>
+        </ACTION>
+        <ACTION>
+            <actionFileName>ACTION.xml</actionFileName>
+        </ACTION>
+    </ACTIONLIST>
+</SCENARIO>
