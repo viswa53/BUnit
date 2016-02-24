@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 
 import com.bunit.response.to.ScenarioResponse;
 import com.bunit.service.BUnitService;
-import com.bunit.util.BuintUtil;
 import com.bunit.xml.to.Action;
 import com.bunit.xml.to.Scenario;
 import com.google.gson.Gson;
@@ -23,9 +22,6 @@ import com.google.gson.Gson;
 @Controller
 @Path("/bunit")
 public class BuintUiResource {
-
-	@Autowired
-	private BuintUtil buintUtil;
 
 	@Autowired
 	private BUnitService bUnitService;
@@ -76,11 +72,11 @@ public class BuintUiResource {
 	
 	@POST
 	@Produces("application/json")
-	@Path("/delete/{scenario_id}")
-	public Scenario deleteScenario(@PathParam("scenario_id") String scenarioId, Action action) 
+	@Path("/delete/{action_id}/{scenario_id}")
+	public ScenarioResponse deleteScenario(@PathParam("action_id") String actionId, @PathParam("scenario_id") String scenarioId) 
 			throws Exception {
 
-		return bUnitService.deleteScenario(scenarioId, action);
+		return bUnitService.deleteScenario(actionId, scenarioId);
 	}
 
 	@POST

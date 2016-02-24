@@ -17,7 +17,7 @@ public interface BUnitService {
 
 	public ScenarioResponse dragScenario(String actionId, String scenarioId) throws Exception;
 
-	public Scenario deleteScenario(String scenarioId, Action action) throws Exception;
+	public ScenarioResponse deleteScenario(String actionId, String scenarioId) throws Exception;
 
 	public ScenarioResponse openScenario(String scenarioName) throws Exception;
 

@@ -187,10 +187,10 @@ public class BUnitServiceImpl implements BUnitService {
 		return scenarioResponse;
 	}
 
-	public Scenario deleteScenario(String scenarioId, Action action) throws Exception {
+	public ScenarioResponse deleteScenario(String actionId, String scenarioId) throws Exception {
 
 		String tomcatHome = System.getProperty("catalina.base");
-		String path = tomcatHome + scenarioFilePath + "\\" + scenarioId;
+		String path = tomcatHome + scenarioFilePath + "\\" + scenarioId + ".xml";
 
 		File scenarioFileName = new File(path);
 
@@ -199,14 +199,34 @@ public class BUnitServiceImpl implements BUnitService {
 
 		for(int index = 0; index < scenarioActionList.size(); index++) {
 			Action scenarioAction = scenarioActionList.get(index);
-			if(scenarioAction.ID.equals(action.ID)) {
+			if(scenarioAction.ID.equals(actionId)) {
 				scenarioActionList.remove(index);
 				break;
 			}
 		}
 
 		buintUtil.jaxbScenarioToXML(scenario, path);
-		return scenario;
+		
+		List<ScenarioInfo> scenarioInfos = new ArrayList<ScenarioInfo>();
+		ScenarioResponse scenarioResponse = new ScenarioResponse();
+		for(Action action : scenarioActionList) {
+			
+			ScenarioInfo scenarioInfo = new ScenarioInfo();
+			scenarioInfo.setActionID(action.ID);
+			scenarioInfo.setActionDescription(action.DESCRIPTION);
+			scenarioInfo.setInputFlist("InputFList");
+			scenarioInfo.setOutputFlist("OutputFlist");
+			scenarioInfo.setButton("button");
+			scenarioInfo.setScenarioID(scenario.SCENARIOID);
+			scenarioInfo.setStatus(scenario.STATUS);
+			
+			scenarioInfos.add(scenarioInfo);
+		}
+		
+		scenarioResponse.setRows(scenarioInfos);
+		scenarioResponse.setTotal(scenarioInfos.size());
+		
+		return scenarioResponse;
 	}
 
 	public ScenarioResponse openScenario(String scenarioName) throws Exception {
