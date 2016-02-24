@@ -245,9 +245,9 @@ public class BUnitServiceImpl implements BUnitService {
 			ScenarioInfo scenarioInfo = new ScenarioInfo();
 			scenarioInfo.setActionID(action.ID);
 			scenarioInfo.setActionDescription(action.DESCRIPTION);
-			scenarioInfo.setInputFlist("InputFList");
-			scenarioInfo.setOutputFlist("OutputFlist");
-			scenarioInfo.setButton("button");
+			scenarioInfo.setInputFlist("<div style='cursor: pointer; text-decoration: underline;' class='inputList' id="+action.ID+" onclick='inputListSelectedRow()'>InputFList</div>");
+			scenarioInfo.setOutputFlist("<div style='cursor: pointer; text-decoration: underline;'  class='outputList'  id="+action.ID+">OutputFlist</div>");
+			scenarioInfo.setButton("<button  type='button' class='btn btn-primary'>Primary</button>");
 			scenarioInfo.setScenarioID(scenario.SCENARIOID);
 			scenarioInfo.setStatus(scenario.STATUS);
 			
