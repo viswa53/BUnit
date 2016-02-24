@@ -5,6 +5,7 @@ import java.util.List;
 import com.bunit.response.to.ActionResponse;
 import com.bunit.response.to.ScenarioResponse;
 import com.bunit.xml.to.Action;
+import com.bunit.xml.to.FList;
 import com.bunit.xml.to.Scenario;
 
 public interface BUnitService {
@@ -22,5 +23,8 @@ public interface BUnitService {
 	public ScenarioResponse openScenario(String scenarioName) throws Exception;
 
 	public List<String> getScenario();
-
+	
+	public FList getInputFList(String actionId) throws Exception;
+	
+	public FList getOutputFList(String actionId) throws Exception;
 }

@@ -1,6 +1,7 @@
 package com.bunit.resource;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -13,9 +14,11 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.bunit.response.to.ScenarioInfo;
 import com.bunit.response.to.ScenarioResponse;
 import com.bunit.service.BUnitService;
 import com.bunit.xml.to.Action;
+import com.bunit.xml.to.FList;
 import com.bunit.xml.to.Scenario;
 import com.google.gson.Gson;
 
@@ -70,13 +73,31 @@ public class BuintUiResource {
 		return bUnitService.dragScenario(actionId, scenarioId);
 	}
 	
-	@POST
+	@GET
 	@Produces("application/json")
 	@Path("/delete/{action_id}/{scenario_id}")
 	public ScenarioResponse deleteScenario(@PathParam("action_id") String actionId, @PathParam("scenario_id") String scenarioId) 
 			throws Exception {
 
 		return bUnitService.deleteScenario(actionId, scenarioId);
+	}
+	
+	@GET
+	@Produces("application/json")
+	@Path("/get_input_flist/{action_id}")
+	public FList getInputFList(@PathParam("action_id") String actionId) 
+			throws Exception {
+		
+		return bUnitService.getInputFList(actionId);
+	}
+	
+	@GET
+	@Produces("application/json")
+	@Path("/get_output_flist/{action_id}")
+	public FList getOutputFList(@PathParam("action_id") String actionId) 
+			throws Exception {
+		
+		return bUnitService.getOutputFList(actionId);
 	}
 
 	@POST
@@ -95,5 +116,29 @@ public class BuintUiResource {
 			throws Exception{
 
 		return bUnitService.editScenarioInput(scenarioId, action);
+	}
+	
+	@GET
+	@Produces("application/json")
+	@Path("/empty")
+	public ScenarioResponse emptyResponse() 
+			throws Exception{
+		ScenarioResponse scenarioResponse = new ScenarioResponse();
+		scenarioResponse.setTotal(7);
+		List<ScenarioInfo> rows = new ArrayList<ScenarioInfo>();
+		rows.add(new ScenarioInfo());
+		rows.add(new ScenarioInfo());
+		rows.add(new ScenarioInfo());
+		rows.add(new ScenarioInfo());
+		rows.add(new ScenarioInfo());
+		rows.add(new ScenarioInfo());
+		rows.add(new ScenarioInfo());
+		rows.add(new ScenarioInfo());
+		rows.add(new ScenarioInfo());
+		rows.add(new ScenarioInfo());
+		
+		scenarioResponse.setRows(rows);
+
+		return scenarioResponse;
 	}
 }

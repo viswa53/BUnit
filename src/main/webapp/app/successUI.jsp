@@ -73,14 +73,16 @@
                method:'get',
                showGroup:true,
                scrollbarSize:0,
+               nowrap:false,
+              
                 columns:[[
-                 		{field:'actionDesc',title:'Action Description',width:250,sortable:true},
-              		    {field:'actionId',title:'Opcode',width:100,resizable:false}
+                	    {field:'actionId',title:'Action',width:250,resizable:false},
+                 		{field:'actionDesc',title:'Description',width:250,sortable:true}
                    ]]
         });
         	
-        	$('#dg').datagrid({url:'http://localhost:8080/bunit/rest/bunit/open_scenario/BRMTestScenario1.xml',
-                method:'get'
+        	$('#dg').datagrid({url:'http://localhost:8080/bunit/rest/bunit/empty',
+                method:'get',rownumbers:true
         	  });
        
              	
@@ -97,27 +99,6 @@
         		$('#dlg').dialog('open');
         	 });
         	
-        	
-            $('#dg').datagrid({
-                view: detailview,
-                detailFormatter:function(index,row){
-                    return '<div class="ddv"></div>';
-                },
-                onExpandRow: function(index,row){
-                    var ddv = $(this).datagrid('getRowDetail',index).find('div.ddv');
-                    ddv.panel({
-                        border:false,
-                        cache:true,
-                        href:'show_form.php?index='+index,
-                        onLoad:function(){
-                            $('#dg').datagrid('fixDetailRowHeight',index);
-                            $('#dg').datagrid('selectRow',index);
-                            $('#dg').datagrid('getRowDetail',index).find('form').form('load',row);
-                        }
-                    });
-                    $('#dg').datagrid('fixDetailRowHeight',index);
-                }
-            });
         });
         function saveItem(index){
             var row = $('#dg').datagrid('getRows')[index];
@@ -182,12 +163,6 @@
                     }
                 });
             }
-        }
-        function newItem(){
-            $('#dg').datagrid('appendRow',{isNewRecord:true});
-            var index = $('#dg').datagrid('getRows').length - 1;
-            $('#dg').datagrid('expandRow', index);
-            $('#dg').datagrid('selectRow', index);
         }
     </script>
     <style type="text/css">
@@ -282,8 +257,8 @@
         </thead>
     </table>
     <div id="toolbar">
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newItem()">Config Scenario</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyItem()">Run Scenario</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" >Config Scenario</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true">Run Scenario</a>
     </div>
  </div>
       <div id="dlg" class="easyui-dialog" title="Basic Dialog" data-options="

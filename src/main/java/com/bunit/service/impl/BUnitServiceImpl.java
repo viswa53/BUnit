@@ -18,6 +18,7 @@ import com.bunit.service.BUnitService;
 import com.bunit.util.BuintUtil;
 import com.bunit.xml.to.Action;
 import com.bunit.xml.to.ActionList;
+import com.bunit.xml.to.FList;
 import com.bunit.xml.to.Scenario;
 
 @Service
@@ -169,12 +170,12 @@ public class BUnitServiceImpl implements BUnitService {
 				ScenarioInfo scenarioInfo = new ScenarioInfo();
 				scenarioInfo.setActionID(action.DATA.ID);
 				scenarioInfo.setActionDescription(action.DATA.DESCRIPTION);
-				scenarioInfo.setInputFlist("InputFList");
-				scenarioInfo.setOutputFlist("OutputFlist");
-				scenarioInfo.setButton("button");
 				scenarioInfo.setScenarioID(scenario.SCENARIOID);
 				scenarioInfo.setStatus(scenario.STATUS);
-				
+				scenarioInfo.setInputFlist("<div style='cursor: pointer; text-decoration: underline;' class='inputList' id="+action.ID+" onclick='inputListSelectedRow()'>InputFList</div>");
+				scenarioInfo.setOutputFlist("<div style='cursor: pointer; text-decoration: underline;'  class='outputList'  id="+action.ID+">OutputFlist</div>");
+				scenarioInfo.setButton("<button  type='button' class='btn btn-primary'>Run</button>");
+								
 				scenarioInfos.add(scenarioInfo);
 				break;
 			}
@@ -247,7 +248,7 @@ public class BUnitServiceImpl implements BUnitService {
 			scenarioInfo.setActionDescription(action.DESCRIPTION);
 			scenarioInfo.setInputFlist("<div style='cursor: pointer; text-decoration: underline;' class='inputList' id="+action.ID+" onclick='inputListSelectedRow()'>InputFList</div>");
 			scenarioInfo.setOutputFlist("<div style='cursor: pointer; text-decoration: underline;'  class='outputList'  id="+action.ID+">OutputFlist</div>");
-			scenarioInfo.setButton("<button  type='button' class='btn btn-primary'>Primary</button>");
+			scenarioInfo.setButton("<button  type='button' class='btn btn-primary'>Run</button>");
 			scenarioInfo.setScenarioID(scenario.SCENARIOID);
 			scenarioInfo.setStatus(scenario.STATUS);
 			
@@ -259,7 +260,7 @@ public class BUnitServiceImpl implements BUnitService {
 
 		return scenarioResponse;
 	}
-
+	
 	public List<String> getScenario() {
 
 		String tomcatHome = System.getProperty("catalina.base");
@@ -275,5 +276,49 @@ public class BUnitServiceImpl implements BUnitService {
 		}
 
 		return fileNames;
+	}
+	
+	public FList getInputFList(String actionId) throws Exception {
+		
+		String tomcatHome = System.getProperty("catalina.base");
+		String path = tomcatHome + actionLibraryFilePath;
+
+		System.out.println("Getting actoins from path : " + path);
+
+		File directory = new File(path);
+		//get all the files from a directory
+		File[] fList = directory.listFiles();
+
+		for(File file : fList) {
+			Action action = buintUtil.convertXmlToAction(file);
+			
+			if(action.DATA.ID.equals(actionId)) {
+				return action.INPUT.FLIST;
+			}
+		}
+
+		return null;
+	}
+	
+	public FList getOutputFList(String actionId) throws Exception {
+
+		String tomcatHome = System.getProperty("catalina.base");
+		String path = tomcatHome + actionLibraryFilePath;
+
+		System.out.println("Getting actoins from path : " + path);
+
+		File directory = new File(path);
+		//get all the files from a directory
+		File[] fList = directory.listFiles();
+
+		for(File file : fList) {
+			Action action = buintUtil.convertXmlToAction(file);
+
+			if(action.DATA.ID.equals(actionId)) {
+				return action.OUTPUT.FLIST;
+			}
+		}
+
+		return null;
 	}
 }
