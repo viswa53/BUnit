@@ -1,15 +1,11 @@
 package com.bunit.resource;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Sample {
 	public static void main(String[] args) {
 		
-		List<Integer> integers = new ArrayList<Integer>();
-		integers.add(10);
-		integers.set(0, 20);
-		
-		System.out.println(integers);
+		System.out.println("<div id'" + 1 + "' ondragstart='OnDragStart(event)'>" + 1 + "</div>");
 	}
 }

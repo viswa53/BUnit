@@ -3,9 +3,9 @@ package com.bunit.service;
 import java.util.List;
 
 import com.bunit.response.to.ActionResponse;
+import com.bunit.response.to.InputFlistResponse;
 import com.bunit.response.to.ScenarioResponse;
 import com.bunit.xml.to.Action;
-import com.bunit.xml.to.FList;
 import com.bunit.xml.to.Scenario;
 
 public interface BUnitService {
@@ -24,7 +24,7 @@ public interface BUnitService {
 
 	public List<String> getScenario();
 	
-	public FList getInputFList(String actionId) throws Exception;
+	public List<InputFlistResponse> getInputFList(String actionId, String scenarioId) throws Exception;
 	
-	public FList getOutputFList(String actionId) throws Exception;
+	public List<InputFlistResponse> getOutputFList(String actionId, String scenarioId) throws Exception;
 }

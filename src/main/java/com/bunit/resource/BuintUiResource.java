@@ -14,11 +14,11 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.bunit.response.to.InputFlistResponse;
 import com.bunit.response.to.ScenarioInfo;
 import com.bunit.response.to.ScenarioResponse;
 import com.bunit.service.BUnitService;
 import com.bunit.xml.to.Action;
-import com.bunit.xml.to.FList;
 import com.bunit.xml.to.Scenario;
 import com.google.gson.Gson;
 
@@ -84,20 +84,22 @@ public class BuintUiResource {
 	
 	@GET
 	@Produces("application/json")
-	@Path("/get_input_flist/{action_id}")
-	public FList getInputFList(@PathParam("action_id") String actionId) 
+	@Path("/get_input_flist/{action_id}/{scenario_id}")
+	public List<InputFlistResponse> getInputFList(@PathParam("action_id") String actionId, 
+			@PathParam("scenario_id") String scenarioId) 
 			throws Exception {
 		
-		return bUnitService.getInputFList(actionId);
+		return bUnitService.getInputFList(actionId, scenarioId);
 	}
 	
 	@GET
 	@Produces("application/json")
-	@Path("/get_output_flist/{action_id}")
-	public FList getOutputFList(@PathParam("action_id") String actionId) 
+	@Path("/get_output_flist/{action_id}/{scenario_id}")
+	public List<InputFlistResponse> getOutputFList(@PathParam("action_id") String actionId,
+			@PathParam("scenario_id") String scenarioId) 
 			throws Exception {
 		
-		return bUnitService.getOutputFList(actionId);
+		return bUnitService.getOutputFList(actionId, scenarioId);
 	}
 
 	@POST
