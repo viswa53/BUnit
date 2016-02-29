@@ -63,6 +63,8 @@
                 }
             });
         });
+        
+     
     </script>
     
      <script type="text/javascript">
@@ -194,6 +196,16 @@
    		 $('#dg').datagrid({url:'/bunit/rest/bunit/open_scenario/'+selectedAction,
                 method:'get'
         	  });
+   		$.ajax({
+			url: "/bunit/rest/bunit/get_scenario",
+			context: document.body
+		}).done(function(response) {
+			console.log(response);
+			$('#dg').datagrid({title:'<div class="title">SCENARIO ID : '+response[0]+', 20/10/21016</div>'
+			//$('#dg').datagrid({title:'<div class="title">SCENARIO ID : '+response[0]+', '+response[1]+'</div>'
+			});
+			
+		});
    		 $('#dlg').dialog('close');
         } else {
         	alert("Please select radio button before cliking on ok button");
@@ -250,9 +262,11 @@
 		//TODO On Drag		
         function OnDragStart(event) {
 			console.log("Ondrag...:-)");
+			event.dataTransfer.setData("text", event.explicitOriginalTarget.data);
 			console.log(event.explicitOriginalTarget.data);
 			dragedId = event.explicitOriginalTarget.data;
             if (event.dataTransfer) {
+            	event.dataTransfer.setData("text", event.explicitOriginalTarget.data);
             }
         };
         
@@ -358,7 +372,6 @@
     
     <table id="dg" class="easyui-datagrid" style="fit=true;width:100%;height:100%"
             toolbar="#toolbar" 
-            title="Scenario-ID:145  Date: 01/20/2016 10:10"
 			fitColumns="true" singleSelect="true">
         <thead>
             <tr>

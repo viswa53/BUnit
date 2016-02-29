@@ -59,7 +59,7 @@ public class BUnitServiceImpl implements BUnitService {
 			Action action = buintUtil.convertXmlToAction(file);
 			
 			ActionInfo actionInfo = new ActionInfo();
-			actionInfo.setActionId("<div id='" + action.DATA.ID + "' ondragstart='OnDragStart(event)'>" + action.DATA.ID + "</div>");
+			actionInfo.setActionId("<div style='cursor: pointer;' id='" + action.DATA.ID + "' draggable='true' ondragstart='OnDragStart(event)'>" + action.DATA.ID + "</div>");
 			actionInfo.setActionDesc(action.DATA.DESCRIPTION);
 			actionInfo.setGroup(action.DATA.GROUP);
 			
