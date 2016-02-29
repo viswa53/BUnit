@@ -188,8 +188,23 @@ public class BUnitServiceImpl implements BUnitService {
 				System.out.println(scenario.ACTIONLIST.ACTION);
 				
 				buintUtil.jaxbScenarioToXML(scenario, scenarioPath);
-				
-				ScenarioInfo scenarioInfo = new ScenarioInfo();
+				for(Action action2Res : scenario.ACTIONLIST.ACTION) {
+					
+					ScenarioInfo scenarioInfo = new ScenarioInfo();
+					scenarioInfo.setActionID(action2Res.ID);
+					scenarioInfo.setActionDescription(action2Res.DESCRIPTION);
+					scenarioInfo.setInputFlist("<div style='cursor: pointer; text-decoration: underline;' class='inputList' id="+action2Res.ID+" onclick='inputListSelectedRow()'>InputFList</div>");
+					scenarioInfo.setOutputFlist("<div style='cursor: pointer; text-decoration: underline;'  class='outputList'  id="+action2Res.ID+" onclick='outputListSelectedRow()'>OutputFlist</div>");
+					scenarioInfo.setButton("<button  type='button' class='btn btn-primary'>Run</button>");
+					scenarioInfo.setScenarioID(scenario.SCENARIOID);
+					scenarioInfo.setStatus(scenario.STATUS);
+					
+//					scenarioInfo.setDelete("<button  type='button' class='btn btn-primary' onclick='deleteRowInGrid()>Run</button>");
+					
+					scenarioInfos.add(scenarioInfo);
+					
+				}
+				/*ScenarioInfo scenarioInfo = new ScenarioInfo();
 				scenarioInfo.setActionID(action.DATA.ID);
 				scenarioInfo.setActionDescription(action.DATA.DESCRIPTION);
 				scenarioInfo.setScenarioID(scenario.SCENARIOID);
@@ -198,7 +213,7 @@ public class BUnitServiceImpl implements BUnitService {
 				scenarioInfo.setOutputFlist("<div style='cursor: pointer; text-decoration: underline;'  class='outputList'  id="+action.ID+" onclick='outputListSelectedRow()'>OutputFlist</div>");
 				scenarioInfo.setButton("<button  type='button' class='btn btn-primary'>Run</button>");
 								
-				scenarioInfos.add(scenarioInfo);
+				scenarioInfos.add(scenarioInfo);*/
 				break;
 			}
 		}
@@ -224,9 +239,8 @@ public class BUnitServiceImpl implements BUnitService {
 		for(int index = 0; index < scenarioActionList.size(); index++) {
 			Action scenarioAction = scenarioActionList.get(index);
 			if(scenarioAction.ID.equals(actionId)) {
-				new File(scenarioBasePath + "\\" + actionId + ".xml").delete();
 				scenarioActionList.remove(index);
-				break;
+				new File(scenarioBasePath + "\\" + actionId + ".xml").delete();
 			}
 		}
 
@@ -265,6 +279,7 @@ public class BUnitServiceImpl implements BUnitService {
 		Scenario scenario = buintUtil.convertXmlToScenario(directory);
 		List<ScenarioInfo> scenarioInfos = new ArrayList<ScenarioInfo>();
 		ScenarioResponse scenarioResponse = new ScenarioResponse();
+		if(scenario.ACTIONLIST != null &&  scenario.ACTIONLIST.ACTION != null) {
 		for(Action action : scenario.ACTIONLIST.ACTION) {
 			
 			ScenarioInfo scenarioInfo = new ScenarioInfo();
@@ -276,13 +291,33 @@ public class BUnitServiceImpl implements BUnitService {
 			scenarioInfo.setScenarioID(scenario.SCENARIOID);
 			scenarioInfo.setStatus(scenario.STATUS);
 			
+//			scenarioInfo.setDelete("<button  type='button' class='btn btn-primary' onclick='deleteRowInGrid()>Run</button>");
+			
 			scenarioInfos.add(scenarioInfo);
+		}
 		}
 		
 		scenarioResponse.setRows(scenarioInfos);
 		scenarioResponse.setTotal(scenarioInfos.size());
 
 		return scenarioResponse;
+	}
+	
+	public List<String> openScenarioInfo(String scenarioName) throws Exception {
+
+		String tomcatHome = System.getProperty("catalina.base");
+		String path = tomcatHome + scenarioFilePath + "\\" + scenarioName + "\\" + scenarioName + ".xml";
+
+		System.out.println("Getting scenario from path : " + path);
+		File directory = new File(path);
+		
+		Scenario scenario = buintUtil.convertXmlToScenario(directory);
+		
+		List<String> scenarioInfo = new ArrayList<String>();
+		scenarioInfo.add(scenario.SCENARIOID);
+		scenarioInfo.add(scenario.DATE);
+
+		return scenarioInfo;
 	}
 	
 	public List<String> getScenario() {

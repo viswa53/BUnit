@@ -13,6 +13,7 @@
     
        <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+	
    <!--   
      <script type="text/css" href="easyui.css"></script>
      <script type="text/css" href="icon.css"></script>
@@ -110,9 +111,7 @@
 					context: document.body
 				}).done(function(response) {
 					
-					for(var i =0; i<response.length;i++){
-						
-					}
+					$('#dg').datagrid({title:'SCENARIO ID : <span class="title">'+response[0]+'</span> , Date : '+response[1]});
 				});
         		$('#dg').datagrid({url:'/bunit/rest/bunit/empty',
                     method:'get',rownumbers:true
@@ -189,6 +188,22 @@
         	}, 500);
    	   }
         
+        
+        //On Delete
+        function deleteRowInGrid() {
+        	setTimeout(function(){
+        	var row = $('#dg').datagrid('getSelected');
+        	if (row){
+        		
+        		console.log(row.actionID + 'Goinh ');
+        		
+				
+        		
+        	}
+        	}, 500);
+   	   }
+        
+        
         function callingAction() {
         var selectedAction = $('input[name="action"]:checked').val();
         if(selectedAction){
@@ -196,13 +211,12 @@
                 method:'get'
         	  });
    		$.ajax({
-			url: "/bunit/rest/bunit/get_scenario",
+			url: "/bunit/rest/bunit/open_scenario_info/"+ selectedAction,
 			context: document.body
 		}).done(function(response) {
 			console.log(response);
-			$('#dg').datagrid({title:'<div class="title">SCENARIO ID : '+response[0]+', 20/10/21016</div>'
-			//$('#dg').datagrid({title:'<div class="title">SCENARIO ID : '+response[0]+', '+response[1]+'</div>'
-			});
+// 			$('#dg').datagrid({title:'<div class="title">SCENARIO ID : '+response[0]+', 20/10/21016</div>'
+			$('#dg').datagrid({title:'SCENARIO ID : <span class="title">'+response[0]+'</span> , Date : '+response[1]});
 			
 		});
    		 $('#dlg').dialog('close');
@@ -274,9 +288,16 @@
     	  console.log("On Drop ;-)")
     	  console.log(event);
             if (event.dataTransfer) {
-            	
-            	 $('#dg').datagrid({url:'/bunit/rest/bunit/drag/'+ dragedId + '/BRMTestScenario1',
-                    method:'get'
+            	var presentScenario = $(".title").text();
+            	console.log("presentScenario : " + presentScenario);
+            	 $('#dg').datagrid({url:'/bunit/rest/bunit/drag/'+ dragedId + '/'+ presentScenario,
+                    method:'get',
+                    onLoadError : function() {window.alert('Please create new scenario or open existing');
+                    
+                    $('#dg').datagrid({url:'/bunit/rest/bunit/empty',
+                        method:'get',rownumbers:true
+                	  });
+                    }
             	  }); 
             	
             }
@@ -352,7 +373,6 @@
          
         <div id="mm5" class="menu-content" style="background:#f0f0f0;padding:10px;text-align:left">
         <p style="font-size:14px;color:#444;">BRM TESTING </div>
-                
          </div> 
          
         
@@ -381,6 +401,7 @@
                 <th field="outputFlist" width="400">OutputFlist</th>
                 <th field="status" width="400">Stauts</th>
                 <th field="button" width="300" align="center">Button</th>
+                <!-- <th field="delete" width="300" align="center">Delete</th> -->
             </tr>
         </thead>
     </table>

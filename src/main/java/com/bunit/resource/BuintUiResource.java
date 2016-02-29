@@ -58,6 +58,14 @@ public class BuintUiResource {
 	
 	@GET
 	@Produces("application/json")
+	@Path("/open_scenario_info/{scenario_name}")
+	public List<String> openScenarioInfo(@PathParam("scenario_name") String  scenarioName) throws Exception {
+
+		return bUnitService.openScenarioInfo(scenarioName);
+	}
+	
+	@GET
+	@Produces("application/json")
 	@Path("/get_scenario")
 	public List<String> getScenario() throws Exception {
 
@@ -128,7 +136,10 @@ public class BuintUiResource {
 		ScenarioResponse scenarioResponse = new ScenarioResponse();
 		scenarioResponse.setTotal(7);
 		List<ScenarioInfo> rows = new ArrayList<ScenarioInfo>();
-		rows.add(new ScenarioInfo());
+		// <a href="#" class="easyui-linkbutton" iconCls="icon-cancel">Cancel</a>
+		ScenarioInfo scenarioInfo =new ScenarioInfo();
+		scenarioInfo.setActionID("<a href='#' class='easyui-linkbutton' iconCls='icon-cancel'></a>");
+		rows.add(scenarioInfo);
 		rows.add(new ScenarioInfo());
 		rows.add(new ScenarioInfo());
 		rows.add(new ScenarioInfo());
