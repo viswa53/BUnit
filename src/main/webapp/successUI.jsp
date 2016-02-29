@@ -154,11 +154,10 @@
         	setTimeout(function(){
         	var row = $('#dg').datagrid('getSelected');
         	if (row){
-        		alert(row.actionID);
         		
         		//TODO TREE
 				$('#test').treegrid({
-				    url:'/bunit/rest/bunit/get_input_flist/' + row.actionID + '/BRMTestScenario1',
+				    url:'/bunit/rest/bunit/get_input_flist/' + row.actionID + '/'+row.scenarioID,
 				    method:'get',
 				      treeField:'name',
 				      idField:'name'
@@ -178,7 +177,7 @@
         		
         		//TODO TREE
 				$('#outputList').treegrid({
-				    url:'/bunit/rest/bunit/get_output_flist/' + row.actionID + '/BRMTestScenario1',
+				    url:'/bunit/rest/bunit/get_output_flist/' + row.actionID + '/'+row.scenarioID,
 				    method:'get',
 				      treeField:'name',
 				      idField:'name'
