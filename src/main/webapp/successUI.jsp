@@ -241,7 +241,7 @@
         function editNode(){
         	
         	console.log("Editing input flist");
-        	var input = $('<input class=".afterEdit"/>', {'type': 'text', 'style':'width:100px'});
+        	var input = $('<input class="afterEdit"/>', {'type': 'text', 'style':'width:100px'});
             var parent = $(".edit").parent();
             parent.append(input);
             $(".edit").text('');
@@ -249,26 +249,15 @@
         
 		function saveNode(){
 			
-        	console.log("Saving input flist");
-        	console.log( $('.afterEdit').val());
-        	var USAGE_END_OFFSET = $('.afterEdit').val();
-        	var USAGE_END_UNIT = $('.afterEdit').val();
-        	//"<div id='USAGE_END_UNIT' class ='edit'></div>"
+			
+        	console.log("Saving input flist ..........");
         	
-        	var div1 = '<div id="' + USAGE_END_UNIT  + '" class ="edit"> ' + USAGE_END_OFFSET +' </div>';
+        	console.log($('.afterEdit').length);
         	
-            var parent1 = $("#USAGE_END_OFFSET").parent();
-            console.log(parent1);
-            $("#USAGE_END_OFFSET").remove();
-            parent1.append(div1);
-            
-           var div2 = '<div id="' + USAGE_END_UNIT  + '" class ="edit"> ' + USAGE_END_UNIT +' </div>';
+        	$('.afterEdit').each(function(i, obj) {
+        	 console.log($(this).prev().attr("id"));	
         	
-            var parent2 = $("#USAGE_END_UNIT").parent();
-            $("#USAGE_END_UNIT").remove();
-            parent2.append(div2);
-            
-            $(".afterEdit").remove();
+        	});
             
          }
 		var dragedId = null;
