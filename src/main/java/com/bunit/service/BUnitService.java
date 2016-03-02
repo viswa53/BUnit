@@ -29,4 +29,6 @@ public interface BUnitService {
 	public List<InputFlistResponse> getOutputFList(String actionId, String scenarioId) throws Exception;
 
 	public List<String> openScenarioInfo(String scenarioName) throws Exception;
+	
+	public List<String> getLogs(String scenarioId);
 }

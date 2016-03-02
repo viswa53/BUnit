@@ -72,7 +72,17 @@
             $('#dlg').dialog('close');
             $('#tdlg').dialog('close');
             $('#outputFlist').dialog('close');
-
+            
+            
+            $.ajax({
+                url: "testing.txt",
+                context: document.body
+            }).done(function(response) {
+            	$('#logs').html(response);
+            });
+            
+            
+            
             $('#pg').datagrid({
                 url: '/bunit/rest/bunit/get_actions',
                 method: 'get',
@@ -328,6 +338,20 @@
             }
             return false;
         }
+         
+         //TODO editing output list
+        function editOutputList() {
+
+            console.log("Editing input flist");
+            var input = $('<input class="afterOutputEdit"/>', {
+                'type': 'text',
+                'style': 'width:100px'
+            });
+            var parent = $(".output_edit").parent();
+            parent.append(input);
+            $(".edit").text('');
+        }
+         
     </script>
     <style type="text/css">
         form {
@@ -405,6 +429,7 @@
 
         <div data-options="region:'south',split:true" style="height:100px; text-align:center">
             <h5>TEST RESULTS - LOGS</h5>
+            <div id='logs' style="font-size: 14px; text-align: justify;"></div>
         </div>
         <div data-options="region:'east',split:true" title="ACTION WIDGETS" style="width:300px;">
 
@@ -484,7 +509,7 @@
             }" style="width:900px;height:500px;padding:10px">
             <div style="margin-bottom:10px">
                 <a href="#" onclick="saveNode()">Save</a>
-                <a href="#" onclick="editNode()">Edit</a>
+                <a href="#" onclick="editOutputList()">Edit</a>
             </div>
 
             <table id="outputList" title="OutPut FList" class="easyui-treegrid" style="width:857px;height:300px">

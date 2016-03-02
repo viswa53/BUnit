@@ -1,6 +1,8 @@
 package com.bunit.service.impl;
 
 import java.io.File;
+import java.io.FileFilter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -367,16 +369,19 @@ public class BUnitServiceImpl implements BUnitService {
 				InputFlistResponse POID = new InputFlistResponse();
 				POID.setName("POID");
 				POID.setDefaultValue(fList.POID);
+				POID.setEditField("<div id='POID' class ='edit'></div>");
 				inputFlistResponseChilds.add(POID);
 				
 				InputFlistResponse PROGRAM_NAME = new InputFlistResponse();
 				PROGRAM_NAME.setName("PROGRAM_NAME");
 				PROGRAM_NAME.setDefaultValue(fList.PROGRAM_NAME);
+				PROGRAM_NAME.setEditField("<div id='PROGRAM_NAME' class ='edit'></div>");
 				inputFlistResponseChilds.add(PROGRAM_NAME);
 				
 				InputFlistResponse SERVICE_OBJ = new InputFlistResponse();
 				SERVICE_OBJ.setName("SERVICE_OBJ");
 				SERVICE_OBJ.setDefaultValue(fList.SERVICE_OBJ);
+				SERVICE_OBJ.setEditField("<div id='SERVICE_OBJ' class ='edit'></div>");
 				inputFlistResponseChilds.add(SERVICE_OBJ);
 				
 				InputFlistResponse dealInfo = new InputFlistResponse();
@@ -457,6 +462,7 @@ public class BUnitServiceImpl implements BUnitService {
 				InputFlistResponse POIDResponse = new InputFlistResponse();
 				POIDResponse.setName("POID");
 				POIDResponse.setDefaultValue(acttInfo.POID);
+				POIDResponse.setEditField("<div id='ACCTINFO_POID' class ='output_edit'></div>");
 				
 				acttInfoResponse.setChildren(Arrays.asList(POIDResponse));
 				//AcctInfo end
@@ -472,16 +478,19 @@ public class BUnitServiceImpl implements BUnitService {
 				InputFlistResponse billinfoObjResponse = new InputFlistResponse();
 				billinfoObjResponse.setName("BILLINFO_OBJ");
 				billinfoObjResponse.setDefaultValue(balInfo.BILLINFO_OBJ);
+				billinfoObjResponse.setEditField("<div id='BILLINFO_OBJ' class ='output_edit'></div>");
 				
 				//NAME
 				InputFlistResponse nameResponse = new InputFlistResponse();
 				nameResponse.setName("NAME");
 				nameResponse.setDefaultValue(balInfo.NAME);
+				nameResponse.setEditField("<div id='NAME' class ='output_edit'></div>");
 				
 				//POID
 				InputFlistResponse billPoidResponse = new InputFlistResponse();
 				billPoidResponse.setName("POID");
 				billPoidResponse.setDefaultValue(balInfo.POID);
+				billPoidResponse.setEditField("<div id='POID' class ='output_edit'></div>");
 				
 				balInfoObjResponse.setChildren(Arrays.asList(billinfoObjResponse, nameResponse, billPoidResponse));
 				//BAL_INFO end
@@ -495,51 +504,61 @@ public class BUnitServiceImpl implements BUnitService {
 				InputFlistResponse balGrpObjResponse = new InputFlistResponse();
 				balGrpObjResponse.setName("BAL_GRP_OBJ");
 				balGrpObjResponse.setDefaultValue(billInfo.BAL_GRP_OBJ);
+				balGrpObjResponse.setEditField("<div id='BAL_GRP_OBJ' class ='output_edit'></div>");
 				
 				//BILLINFO_ID
 				InputFlistResponse billinfoIdResponse = new InputFlistResponse();
 				billinfoIdResponse.setName("BILLINFO_ID");
 				billinfoIdResponse.setDefaultValue(billInfo.BILLINFO_ID);
+				billinfoIdResponse.setEditField("<div id='BILLINFO_ID' class ='output_edit'></div>");
 				
 				//BILL_WHEN
 				InputFlistResponse billWhenResponse = new InputFlistResponse();
 				billWhenResponse.setName("BILL_WHEN");
 				billWhenResponse.setDefaultValue(billInfo.BILL_WHEN);
+				billWhenResponse.setEditField("<div id='BILL_WHEN' class ='output_edit'></div>");
 				
 				//CURRENCY
 				InputFlistResponse currencyResponse = new InputFlistResponse();
 				currencyResponse.setName("CURRENCY");
 				currencyResponse.setDefaultValue(billInfo.CURRENCY);
+				currencyResponse.setEditField("<div id='CURRENCY' class ='output_edit'></div>");
 				
 				//CURRENCY_SECONDARY
 				InputFlistResponse currencySecondaryResponse = new InputFlistResponse();
 				currencySecondaryResponse.setName("CURRENCY_SECONDARY");
 				currencySecondaryResponse.setDefaultValue(billInfo.CURRENCY_SECONDARY);
+				currencySecondaryResponse.setEditField("<div id='CURRENCY_SECONDARY' class ='output_edit'></div>");
 				
 				//EFFECTIVE_T
 				InputFlistResponse effectiveTResponse = new InputFlistResponse();
 				effectiveTResponse.setName("EFFECTIVE_T");
 				effectiveTResponse.setDefaultValue(billInfo.EFFECTIVE_T);
+				effectiveTResponse.setEditField("<div id='EFFECTIVE_T' class ='output_edit'></div>");
 				
 				//PAYINFO_OBJ
 				InputFlistResponse PAYINFO_OBJ = new InputFlistResponse();
 				PAYINFO_OBJ.setName("PAYINFO_OBJ");
 				PAYINFO_OBJ.setDefaultValue(billInfo.PAYINFO_OBJ);
+				PAYINFO_OBJ.setEditField("<div id='PAYINFO_OBJ' class ='output_edit'></div>");
 				
 				//STATUS
 				InputFlistResponse STATUS = new InputFlistResponse();
 				STATUS.setName("STATUS");
 				STATUS.setDefaultValue(billInfo.STATUS);
+				STATUS.setEditField("<div id='STATUS' class ='output_edit'></div>");
 				
 				//PAY_TYPE
 				InputFlistResponse PAY_TYPE = new InputFlistResponse();
 				PAY_TYPE.setName("PAY_TYPE");
 				PAY_TYPE.setDefaultValue(billInfo.PAY_TYPE);
+				PAY_TYPE.setEditField("<div id='PAY_TYPE' class ='output_edit'></div>");
 				
 				//POID
 				InputFlistResponse POID = new InputFlistResponse();
 				POID.setName("POID");
 				POID.setDefaultValue(billInfo.POID);
+				POID.setEditField("<div id='BILL_INFO_POID' class ='output_edit'></div>");
 				
 				billInfoObjResponse.setChildren(Arrays.asList(balGrpObjResponse, billinfoIdResponse, billWhenResponse, currencyResponse, currencySecondaryResponse, 
 						effectiveTResponse, PAYINFO_OBJ, STATUS, PAY_TYPE, POID));
@@ -555,71 +574,85 @@ public class BUnitServiceImpl implements BUnitService {
 				InputFlistResponse ADDRESS = new InputFlistResponse();
 				ADDRESS.setName("ADDRESS");
 				ADDRESS.setDefaultValue(nameInfo.ADDRESS);
+				ADDRESS.setEditField("<div id='ADDRESS' class ='output_edit'></div>");
 				
 				//CANON_COUNTRY
 				InputFlistResponse CANON_COUNTRY = new InputFlistResponse();
 				CANON_COUNTRY.setName("CANON_COUNTRY");
 				CANON_COUNTRY.setDefaultValue(nameInfo.CANON_COUNTRY);
+				CANON_COUNTRY.setEditField("<div id='CANON_COUNTRY' class ='output_edit'></div>");
 				
 				//CITY
 				InputFlistResponse CITY = new InputFlistResponse();
 				CITY.setName("CITY");
 				CITY.setDefaultValue(nameInfo.CITY);
+				CITY.setEditField("<div id='CITY' class ='output_edit'></div>");
 				
 				//COMPANY
 				InputFlistResponse COMPANY = new InputFlistResponse();
 				COMPANY.setName("COMPANY");
 				COMPANY.setDefaultValue(nameInfo.COMPANY);
+				COMPANY.setEditField("<div id='COMPANY' class ='output_edit'></div>");
 				
 				//CONTACT_TYPE
 				InputFlistResponse CONTACT_TYPE = new InputFlistResponse();
 				CONTACT_TYPE.setName("CONTACT_TYPE");
 				CONTACT_TYPE.setDefaultValue(nameInfo.CONTACT_TYPE);
+				CONTACT_TYPE.setEditField("<div id='CONTACT_TYPE' class ='output_edit'></div>");
 				
 				//COUNTRY
 				InputFlistResponse COUNTRY = new InputFlistResponse();
 				COUNTRY.setName("COUNTRY");
 				COUNTRY.setDefaultValue(nameInfo.COUNTRY);
+				COUNTRY.setEditField("<div id='COUNTRY' class ='output_edit'></div>");
 				
 				//ELEMENT_ID
 				InputFlistResponse ELEMENT_ID = new InputFlistResponse();
 				ELEMENT_ID.setName("ELEMENT_ID");
 				ELEMENT_ID.setDefaultValue(nameInfo.ELEMENT_ID);
+				ELEMENT_ID.setEditField("<div id='ELEMENT_ID' class ='output_edit'></div>");
 				
 				//EMAIL_ADDR
 				InputFlistResponse EMAIL_ADDR = new InputFlistResponse();
 				EMAIL_ADDR.setName("EMAIL_ADDR");
 				EMAIL_ADDR.setDefaultValue(nameInfo.EMAIL_ADDR);
+				EMAIL_ADDR.setEditField("<div id='EMAIL_ADDR' class ='output_edit'></div>");
 				
 				//FIRST_NAME
 				InputFlistResponse FIRST_NAME = new InputFlistResponse();
 				FIRST_NAME.setName("FIRST_NAME");
 				FIRST_NAME.setDefaultValue(nameInfo.FIRST_NAME);
+				FIRST_NAME.setEditField("<div id='FIRST_NAME' class ='output_edit'></div>");
 				
 				//LAST_NAME
 				InputFlistResponse LAST_NAME = new InputFlistResponse();
 				LAST_NAME.setName("LAST_NAME");
 				LAST_NAME.setDefaultValue(nameInfo.LAST_NAME);
+				LAST_NAME.setEditField("<div id='LAST_NAME' class ='output_edit'></div>");
 				
 				//MIDDLE_NAME
 				InputFlistResponse MIDDLE_NAME = new InputFlistResponse();
 				MIDDLE_NAME.setName("MIDDLE_NAME");
 				MIDDLE_NAME.setDefaultValue(nameInfo.MIDDLE_NAME);
+				MIDDLE_NAME.setEditField("<div id='MIDDLE_NAME' class ='output_edit'></div>");
 				
 				//SALUTATION
 				InputFlistResponse SALUTATION = new InputFlistResponse();
 				SALUTATION.setName("SALUTATION");
 				SALUTATION.setDefaultValue(nameInfo.SALUTATION);
+				SALUTATION.setEditField("<div id='SALUTATION' class ='output_edit'></div>");
 				
 				//STATE
 				InputFlistResponse STATE = new InputFlistResponse();
 				STATE.setName("STATE");
 				STATE.setDefaultValue(nameInfo.STATE);
+				STATE.setEditField("<div id='STATE' class ='output_edit'></div>");
 				
 				//ZIP
 				InputFlistResponse ZIP = new InputFlistResponse();
 				ZIP.setName("ZIP");
 				ZIP.setDefaultValue(nameInfo.ZIP);
+				ZIP.setEditField("<div id='ZIP' class ='output_edit'></div>");
 				
 				NAMEINFO.setChildren(Arrays.asList(ADDRESS, CANON_COUNTRY, CITY, COMPANY, CONTACT_TYPE, COUNTRY, 
 						ELEMENT_ID, EMAIL_ADDR, FIRST_NAME, LAST_NAME, MIDDLE_NAME, SALUTATION, STATE, ZIP));
@@ -632,5 +665,29 @@ public class BUnitServiceImpl implements BUnitService {
 		}
 
 		return null;
+	}
+	
+	public List<String> getLogs(String scenarioId) {
+		
+		String tomcatHome = System.getProperty("catalina.base");
+		String path = tomcatHome + scenarioFilePath + "\\" + scenarioId;
+
+		System.out.println("Getting logs from path : " + path);
+
+		File directory = new File(path);
+
+		FileFilter filter = new FileFilter() {
+			public boolean accept(File pathname) {
+				return pathname.getName().endsWith(".txt");
+			}
+		};
+		
+		List<String> logFileNames = new ArrayList<String>();
+		File[] logFiles = directory.listFiles(filter);
+		for(File logFile : logFiles) {
+			logFileNames.add(logFile.getAbsolutePath());
+		}
+		
+		return logFileNames;
 	}
 }

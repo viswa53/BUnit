@@ -154,4 +154,13 @@ public class BuintUiResource {
 
 		return scenarioResponse;
 	}
+	
+	@GET
+	@Produces("application/json")
+	@Path("/get_logs/{scenario_id}")
+	public List<String> editLogFiles(@PathParam("scenario_id")String scenarioId) 
+			throws Exception{
+
+		return bUnitService.getLogs(scenarioId);
+	}
 }
