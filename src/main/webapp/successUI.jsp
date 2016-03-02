@@ -168,6 +168,19 @@
         	}, 500);
    	   }
         
+        function deleteSelectedRow(){
+        	setTimeout(function(){
+        	var row = $('#dg').datagrid('getSelected');
+        	if (row){
+        		//TODO TREE
+				$('#dg').datagrid({
+				    url:'/bunit/rest/bunit/delete/' + row.actionID + '/'+row.scenarioID,
+				    method:'get'
+				});
+        	}
+        	}, 500);
+   	   }
+        
         function outputListSelectedRow() {
         	setTimeout(function(){
         	var row = $('#dg').datagrid('getSelected');
@@ -187,23 +200,8 @@
         	}
         	}, 500);
    	   }
-        
-        
-        //On Delete
-        function deleteRowInGrid() {
-        	setTimeout(function(){
-        	var row = $('#dg').datagrid('getSelected');
-        	if (row){
-        		
-        		console.log(row.actionID + 'Goinh ');
-        		
-				
-        		
-        	}
-        	}, 500);
-   	   }
-        
-        
+         
+       
         function callingAction() {
         var selectedAction = $('input[name="action"]:checked').val();
         if(selectedAction){
@@ -314,6 +312,17 @@
         .dv-table input{
             border:1px solid #ccc;
         }
+        .deleteIcon{
+        cursor: pointer;
+	    height: 22px;
+	    width: 22px;
+	    }
+	    
+	    .deleteIconDiv{
+	    text-align: center;
+	    padding-top:2px;
+	    }
+        
     </style>
     
     <!-- -- END OF AUMAMAHESH -->
@@ -389,7 +398,8 @@
                 <th field="inputFlist" width="400" >InputFlist</th>
                 <th field="outputFlist" width="400">OutputFlist</th>
                 <th field="status" width="400">Stauts</th>
-                <th field="button" width="300" align="center">Button</th>
+                <th field="runButton" width="300" align="center">Button</th>
+                <th field="deleteButton" width="300" align="center">Delete</th>
                 <!-- <th field="delete" width="300" align="center">Delete</th> -->
             </tr>
         </thead>

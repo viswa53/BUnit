@@ -14,7 +14,9 @@ public class ScenarioInfo {
 	
 	private String Status;
 	
-	private String Button;
+	private String runButton;
+	
+	private String deleteButton;
 
 	public String getScenarioID() {
 		return ScenarioID;
@@ -64,11 +66,21 @@ public class ScenarioInfo {
 		Status = status;
 	}
 
-	public String getButton() {
-		return Button;
+	public String getRunButton() {
+		return runButton;
 	}
 
-	public void setButton(String button) {
-		Button = button;
+	public void setRunButton(String runButton) {
+		this.runButton = runButton;
 	}
+
+	public String getDeleteButton() {
+		return deleteButton;
+	}
+
+	public void setDeleteButton(String deleteButton) {
+		this.deleteButton = deleteButton;
+	}
+
+	
 }

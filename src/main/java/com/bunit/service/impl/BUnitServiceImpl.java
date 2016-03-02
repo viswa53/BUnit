@@ -195,7 +195,8 @@ public class BUnitServiceImpl implements BUnitService {
 					scenarioInfo.setActionDescription(action2Res.DESCRIPTION);
 					scenarioInfo.setInputFlist("<div style='cursor: pointer; text-decoration: underline;' class='inputList' id="+action2Res.ID+" onclick='inputListSelectedRow()'>InputFList</div>");
 					scenarioInfo.setOutputFlist("<div style='cursor: pointer; text-decoration: underline;'  class='outputList'  id="+action2Res.ID+" onclick='outputListSelectedRow()'>OutputFlist</div>");
-					scenarioInfo.setButton("<button  type='button' class='btn btn-primary'>Run</button>");
+					scenarioInfo.setRunButton("<button  type='button' class='btn runBtn btn-primary'>Run</button>");
+					scenarioInfo.setDeleteButton("<div class='deleteIconDiv'><img src='img/delete.png' class='deleteIcon' onclick='deleteSelectedRow()'/></div>");
 					scenarioInfo.setScenarioID(scenario.SCENARIOID);
 					scenarioInfo.setStatus(scenario.STATUS);
 					
@@ -253,12 +254,12 @@ public class BUnitServiceImpl implements BUnitService {
 			ScenarioInfo scenarioInfo = new ScenarioInfo();
 			scenarioInfo.setActionID(action.ID);
 			scenarioInfo.setActionDescription(action.DESCRIPTION);
-			scenarioInfo.setInputFlist("InputFList");
-			scenarioInfo.setOutputFlist("OutputFlist");
-			scenarioInfo.setButton("button");
+			scenarioInfo.setInputFlist("<div style='cursor: pointer; text-decoration: underline;' class='inputList' id="+action.ID+" onclick='inputListSelectedRow()'>InputFList</div>");
+			scenarioInfo.setOutputFlist("<div style='cursor: pointer; text-decoration: underline;'  class='outputList'  id="+action.ID+" onclick='outputListSelectedRow()'>OutputFlist</div>");
+			scenarioInfo.setRunButton("<button  type='button' class='btn runBtn btn-primary'>Run</button>");
+			scenarioInfo.setDeleteButton("<div class='deleteIconDiv'><img src='img/delete.png' class='deleteIcon' onclick='deleteSelectedRow()'/></div>");
 			scenarioInfo.setScenarioID(scenario.SCENARIOID);
 			scenarioInfo.setStatus(scenario.STATUS);
-			
 			scenarioInfos.add(scenarioInfo);
 		}
 		
@@ -287,7 +288,8 @@ public class BUnitServiceImpl implements BUnitService {
 			scenarioInfo.setActionDescription(action.DESCRIPTION);
 			scenarioInfo.setInputFlist("<div style='cursor: pointer; text-decoration: underline;' class='inputList' id="+action.ID+" onclick='inputListSelectedRow()'>InputFList</div>");
 			scenarioInfo.setOutputFlist("<div style='cursor: pointer; text-decoration: underline;'  class='outputList'  id="+action.ID+" onclick='outputListSelectedRow()'>OutputFlist</div>");
-			scenarioInfo.setButton("<button  type='button' class='btn btn-primary'>Run</button>");
+			scenarioInfo.setRunButton("<button  type='button' class='btn runBtn btn-primary'>Run</button>");
+			scenarioInfo.setDeleteButton("<div class='deleteIconDiv'><img src='img/delete.png' class='deleteIcon' onclick='deleteSelectedRow()'/></div>");
 			scenarioInfo.setScenarioID(scenario.SCENARIOID);
 			scenarioInfo.setStatus(scenario.STATUS);
 			
