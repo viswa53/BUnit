@@ -3,9 +3,9 @@ package com.bunit.service;
 import java.util.List;
 
 import com.bunit.response.to.ActionResponse;
+import com.bunit.response.to.EditedOutputList;
 import com.bunit.response.to.InputFlistResponse;
 import com.bunit.response.to.ScenarioResponse;
-import com.bunit.xml.to.Action;
 import com.bunit.xml.to.Scenario;
 
 public interface BUnitService {
@@ -14,7 +14,7 @@ public interface BUnitService {
 
 	public List<?> createNewScenario() throws Exception;
 
-	public Scenario editScenarioInput(String scenarioId, Action action) throws Exception;
+	public Scenario editScenarioInput(String actionId, String scenarioId, EditedOutputList editedOutputList) throws Exception;
 
 	public ScenarioResponse dragScenario(String actionId, String scenarioId) throws Exception;
 

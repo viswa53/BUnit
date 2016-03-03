@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.bunit.response.to.ActionInfo;
 import com.bunit.response.to.ActionResponse;
+import com.bunit.response.to.EditedOutputList;
 import com.bunit.response.to.InputFlistResponse;
 import com.bunit.response.to.ScenarioInfo;
 import com.bunit.response.to.ScenarioResponse;
@@ -126,26 +127,10 @@ public class BUnitServiceImpl implements BUnitService {
 		return response;
 	}
 
-	public Scenario editScenarioInput(String scenarioId, Action action) throws Exception {
+	public Scenario editScenarioInput(String actionId, String scenarioId, EditedOutputList editedOutputList) throws Exception {
+		System.out.println(editedOutputList.getValues());
 
-		String tomcatHome = System.getProperty("catalina.base");
-		String path = tomcatHome + scenarioFilePath + "\\" + scenarioId;
-
-		File scenarioFileName = new File(path);
-
-		Scenario scenario = buintUtil.convertXmlToScenario(scenarioFileName);
-		List<Action> scenarioActionList = scenario.ACTIONLIST.ACTION;
-
-		for(int index = 0; index < scenarioActionList.size(); index++) {
-			Action scenarioAction = scenarioActionList.get(index);
-			if(scenarioAction.ID.equals(action.ID)) {
-				scenarioActionList.set(index, action);
-				break;
-			}
-		}
-
-		buintUtil.jaxbScenarioToXML(scenario, path);
-		return scenario;
+		return null;
 	}
 
 	public ScenarioResponse dragScenario(String actionId, String scenarioId) throws Exception {

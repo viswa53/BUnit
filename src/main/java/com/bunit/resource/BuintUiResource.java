@@ -13,7 +13,9 @@ import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import com.bunit.response.to.EditedOutputList;
 import com.bunit.response.to.InputFlistResponse;
 import com.bunit.response.to.ScenarioInfo;
 import com.bunit.response.to.ScenarioResponse;
@@ -116,16 +118,17 @@ public class BuintUiResource {
 	public Scenario editScenarioInput(@PathParam("scenario_id") String scenarioId, Action action) 
 			throws Exception{
 
-		return bUnitService.editScenarioInput(scenarioId, action);
+		return bUnitService.editScenarioInput(scenarioId, null, null);
 	}
 
 	@POST
 	@Produces("application/json")
-	@Path("/edit_scenario/output/{scenario_id}")
-	public Scenario editScenarioOutput(@PathParam("scenario_id") String scenarioId, Action action) 
+	@Path("/edit_scenario/output/{action_id}/{scenario_id}")
+	public Scenario editScenarioOutput(@PathParam("action_id") String actionId, @PathParam("scenario_id") String scenarioId, 
+			@RequestBody EditedOutputList editedOutputList) 
 			throws Exception{
 
-		return bUnitService.editScenarioInput(scenarioId, action);
+		return bUnitService.editScenarioInput(actionId, scenarioId, editedOutputList);
 	}
 	
 	@GET

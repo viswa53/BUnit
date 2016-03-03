@@ -147,7 +147,7 @@
 
         });
 
-        function saveItem(index) {
+        /* function saveItem(index) {
             var row = $('#dg').datagrid('getRows')[index];
             var url = row.isNewRecord ? 'save_user.php' : 'update_user.php?id=' + row.id;
             $('#dg').datagrid('getRowDetail', index).find('form').form('submit', {
@@ -165,9 +165,9 @@
                     });
                 }
             });
-        }
+        } */
 
-        function cancelItem(index) {
+        /* function cancelItem(index) {
             var row = $('#dg').datagrid('getRows')[index];
             if (row.isNewRecord) {
                 $('#dg').datagrid('deleteRow', index);
@@ -175,7 +175,7 @@
                 $('#dg').datagrid('collapseRow', index);
             }
         }
-
+ */
         function inputListSelectedRow() {
             setTimeout(function() {
                 var row = $('#dg').datagrid('getSelected');
@@ -352,6 +352,40 @@
             $(".edit").text('');
         }
          
+        function saveOutputList() {
+
+
+            console.log("Saving output flist ..........");
+
+            console.log($('.afterOutputEdit').length);
+
+                var map = new Object(); // or var map = {};
+                var sendingObj = {};
+            $('.afterOutputEdit').each(function(i, obj) {
+//             	console.log($(this).val());            	
+//                 console.log($(this).prev().attr("id"));
+                
+                
+                map[$(this).prev().attr("id")] = $(this).val();
+
+            });
+            sendingObj.values = map;
+            
+            JSON.stringify(sendingObj);
+            console.log(sendingObj);
+            
+            $.ajax({
+                url: "/bunit/rest/bunit/edit_scenario/output/viswa/viswa",
+                type: "POST",
+                data: JSON.stringify(sendingObj),
+                context: document.body,
+                contentType: "application/json; charset=utf-8"
+            }).done(function(response) {
+            	$('#logs').html(response);
+            });
+
+        }
+         
     </script>
     <style type="text/css">
         form {
@@ -452,7 +486,6 @@
                         <th field="status" width="400">Stauts</th>
                         <th field="runButton" width="300" align="center">Button</th>
                         <th field="deleteButton" width="300" align="center">Delete</th>
-                        <!-- <th field="delete" width="300" align="center">Delete</th> -->
                     </tr>
                 </thead>
             </table>
@@ -508,7 +541,7 @@
                 $(this).dialog('center');
             }" style="width:900px;height:500px;padding:10px">
             <div style="margin-bottom:10px">
-                <a href="#" onclick="saveNode()">Save</a>
+                <a href="#" onclick="saveOutputList()">Save</a>
                 <a href="#" onclick="editOutputList()">Edit</a>
             </div>
 
