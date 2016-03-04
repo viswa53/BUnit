@@ -296,14 +296,15 @@
         }
         var dragedId = null;
          //TODO On Drag		
-        function OnDragStart(event) {
-            console.log("Ondrag...:-)");
-            event.dataTransfer.setData("text", event.explicitOriginalTarget.data);
-            console.log(event.explicitOriginalTarget.data);
-            dragedId = event.explicitOriginalTarget.data;
-            if (event.dataTransfer) {
-                event.dataTransfer.setData("text", event.explicitOriginalTarget.data);
-            }
+         function OnDragStart(event) {
+        	 dragedId = event.target.id;
+        	  if(navigator.userAgent.indexOf("Firefox") != -1 ) {
+        	           ragedId = event.explicitOriginalTarget.data;
+        	            if (event.dataTransfer) {
+        	                event.dataTransfer.setData("text", event.explicitOriginalTarget.data);
+        	            }
+        	    }
+           
         };
 
          //TODO On Drop
