@@ -185,6 +185,7 @@
                     $('#test').treegrid({
                         url: '/bunit/rest/bunit/get_input_flist/' + row.actionID + '/' + row.scenarioID,
                         method: 'get',
+                        title : '<div id="inputFlistId">' + row.actionID + '</div>',
                         treeField: 'name',
                         idField: 'name'
                     });
@@ -212,12 +213,11 @@
             setTimeout(function() {
                 var row = $('#dg').datagrid('getSelected');
                 if (row) {
-                    alert(row.actionID);
-
                     //TODO TREE
                     $('#outputList').treegrid({
                         url: '/bunit/rest/bunit/get_output_flist/' + row.actionID + '/' + row.scenarioID,
                         method: 'get',
+                        title : '<div id="outputFlistId">' + row.actionID + '</div>',
                         treeField: 'name',
                         idField: 'name'
                     });
@@ -269,31 +269,6 @@
             }
         }
 
-        function editNode() {
-
-            console.log("Editing input flist");
-            var input = $('<input class="afterEdit"/>', {
-                'type': 'text',
-                'style': 'width:100px'
-            });
-            var parent = $(".edit").parent();
-            parent.append(input);
-            $(".edit").text('');
-        }
-
-        function saveNode() {
-
-
-            console.log("Saving input flist ..........");
-
-            console.log($('.afterEdit').length);
-
-            $('.afterEdit').each(function(i, obj) {
-                console.log($(this).prev().attr("id"));
-
-            });
-
-        }
         var dragedId = null;
          //TODO On Drag		
          function OnDragStart(event) {
@@ -318,13 +293,22 @@
                     url: '/bunit/rest/bunit/drag/' + dragedId + '/' + presentScenario,
                     method: 'get',
                     onLoadError: function() {
-                        window.alert('Please create new scenario or open existing');
-
-                        $('#dg').datagrid({
-                            url: '/bunit/rest/bunit/empty',
-                            method: 'get',
-                            rownumbers: true
-                        });
+                    	if(presentScenario == null || presentScenario.length==0) {
+                    		
+						console.log("cccccccccccccc");
+                    		 $('#dg').datagrid({
+                                 url: '/bunit/rest/bunit/empty',
+                                 method: 'get',
+                                 rownumbers: true
+                             });
+                    		 window.alert('No scenatio available, create a new scenario or open existing.');
+                    	} else {
+	                    	 $('#dg').datagrid({
+                             url: '/bunit/rest/bunit/open_scenario/' + presentScenario,
+                             method: 'get'
+                         });
+                    		window.alert('Failed to drag action, same action draged consecutively.');                		
+                    	}
                     }
                 });
 
@@ -354,18 +338,11 @@
         }
          
         function saveOutputList() {
-
-
             console.log("Saving output flist ..........");
-
             console.log($('.afterOutputEdit').length);
-
                 var map = new Object(); // or var map = {};
                 var sendingObj = {};
             $('.afterOutputEdit').each(function(i, obj) {
-//             	console.log($(this).val());            	
-//                 console.log($(this).prev().attr("id"));
-                
                 
                 map[$(this).prev().attr("id")] = $(this).val();
 
@@ -374,9 +351,9 @@
             
             JSON.stringify(sendingObj);
             console.log(sendingObj);
-            
+            var presentScenario = $(".title").text();
             $.ajax({
-                url: "/bunit/rest/bunit/edit_scenario/output/viswa/viswa",
+                url: "/bunit/rest/bunit/edit_scenario/output/" + $('#outputFlistId').text() + "/" + presentScenario,
                 type: "POST",
                 data: JSON.stringify(sendingObj),
                 context: document.body,
@@ -384,8 +361,51 @@
             }).done(function(response) {
             	$('#logs').html(response);
             });
-
+            
+            $('#outputFlist').dialog('close');
         }
+        
+        function editNode() {
+
+            console.log("Editing input flist");
+            var input = $('<input class="afterEdit"/>', {
+                'type': 'text',
+                'style': 'width:100px'
+            });
+            var parent = $(".edit").parent();
+            parent.append(input);
+            $(".edit").text('');
+        }
+
+        function saveNode() {
+        	
+            console.log("Saving input flist ..........");
+
+            var map = new Object(); // or var map = {};
+            var sendingObj = {};
+            
+            $('.afterEdit').each(function(i, obj) {
+                console.log($(this).prev().attr("id"));
+                map[$(this).prev().attr("id")] = $(this).val();
+
+            });
+            
+            console.log($('.afterEdit').length);
+               
+            sendingObj.values = map;
+            var presentScenario = $(".title").text();
+            $.ajax({
+                url: "/bunit/rest/bunit/edit_scenario/input/" + $('#inputFlistId').text() + "/" + presentScenario,
+                type: "POST",
+                data: JSON.stringify(sendingObj),
+                context: document.body,
+                contentType: "application/json; charset=utf-8"
+            }).done(function(response) {
+            	$('#logs').html(response);
+            }); 
+            $('#tdlg').dialog('close');
+        }
+
          
     </script>
     <style type="text/css">
@@ -484,7 +504,7 @@
                         <th field="actionDescription" width="300">Action Description</th>
                         <th field="inputFlist" width="400">InputFlist</th>
                         <th field="outputFlist" width="400">OutputFlist</th>
-                        <th field="status" width="400">Stauts</th>
+                        <th field="status" width="400">Status</th>
                         <th field="runButton" width="300" align="center">Button</th>
                         <th field="deleteButton" width="300" align="center">Delete</th>
                     </tr>
@@ -525,7 +545,7 @@
                 <a href="#" onclick="editNode()">Edit</a>
             </div>
 
-            <table id="test" title="Input FList" class="easyui-treegrid" style="width:857px;height:300px">
+            <table id="test" title="Input FList" class="easyui-treegrid" style="width:857px;height:400px">
                 <thead>
                     <tr>
                         <th title="Field" field="name" width="220">Field</th>
@@ -546,7 +566,7 @@
                 <a href="#" onclick="editOutputList()">Edit</a>
             </div>
 
-            <table id="outputList" title="OutPut FList" class="easyui-treegrid" style="width:857px;height:300px">
+            <table id="outputList" title="OutPut FList" class="easyui-treegrid" style="width:857px;height:400px">
                 <thead>
                     <tr>
                         <th title="Field" field="name" width="220">Field</th>

@@ -45,4 +45,13 @@ public class FList {
 		BILLINFO = bILLINFO;
 		NAMEINFO = nAMEINFO;
 	}
+
+	@Override
+	public String toString() {
+		return "FList [DEAL_INFO=" + DEAL_INFO + ", POID=" + POID + ", PROGRAM_NAME=" + PROGRAM_NAME + ", SERVICE_OBJ="
+				+ SERVICE_OBJ + ", ACCOUNT_OBJ=" + ACCOUNT_OBJ + ", END_T=" + END_T + ", ACCTINFO=" + ACCTINFO
+				+ ", BAL_INFO=" + BAL_INFO + ", BILLINFO=" + BILLINFO + ", NAMEINFO=" + NAMEINFO + "]";
+	}
+	
+	
 }

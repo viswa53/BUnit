@@ -6,7 +6,6 @@ import com.bunit.response.to.ActionResponse;
 import com.bunit.response.to.EditedOutputList;
 import com.bunit.response.to.InputFlistResponse;
 import com.bunit.response.to.ScenarioResponse;
-import com.bunit.xml.to.Scenario;
 
 public interface BUnitService {
 
@@ -14,7 +13,7 @@ public interface BUnitService {
 
 	public List<?> createNewScenario() throws Exception;
 
-	public Scenario editScenarioInput(String actionId, String scenarioId, EditedOutputList editedOutputList) throws Exception;
+	public String editScenarioOutput(String actionId, String scenarioId, EditedOutputList editedOutputList) throws Exception;
 
 	public ScenarioResponse dragScenario(String actionId, String scenarioId) throws Exception;
 
@@ -31,4 +30,6 @@ public interface BUnitService {
 	public List<String> openScenarioInfo(String scenarioName) throws Exception;
 	
 	public List<String> getLogs(String scenarioId);
+	
+	public String editScenarioInput(String actionId, String scenarioId, EditedOutputList editedOutputList) throws Exception;
 }
