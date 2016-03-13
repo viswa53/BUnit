@@ -68,7 +68,7 @@ public class BUnitServiceImpl implements BUnitService {
 
 	public ActionResponse getActions() throws Exception {
 
-		String tomcatHome = System.getProperty("catalina.base");
+		String tomcatHome = System.getProperty("user.home");
 		String path = tomcatHome + actionLibraryFilePath;
 		
 		if(isLinux) {
@@ -106,7 +106,7 @@ public class BUnitServiceImpl implements BUnitService {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<?> createNewScenario() throws Exception {
 
-		String tomcatHome = System.getProperty("catalina.base");
+		String tomcatHome = System.getProperty("user.home");
 		String path = tomcatHome + scenarioFilePath;
 		System.out.println(path);
 		
@@ -167,7 +167,7 @@ public class BUnitServiceImpl implements BUnitService {
 	}
 
 	public String editScenarioOutput(String actionId, String scenarioId, EditedOutputList editedOutputList) throws Exception {
-		String tomcatHome = System.getProperty("catalina.base");
+		String tomcatHome = System.getProperty("user.home");
 		String scenarioPath = tomcatHome + scenarioFilePath + "\\" + scenarioId + "\\" +scenarioId + ".xml";
 		String actionPath = tomcatHome + scenarioFilePath + "\\" + scenarioId + "\\" + actionId + ".xml"; 
 		
@@ -191,7 +191,7 @@ public class BUnitServiceImpl implements BUnitService {
 			return null;
 		}
 
-		String tomcatHome = System.getProperty("catalina.base");
+		String tomcatHome = System.getProperty("user.home");
 		String path = tomcatHome + actionLibraryFilePath;
 		String scenarioPathLocation = tomcatHome + scenarioFilePath + "\\" + scenarioId;
 		String scenarioPath = tomcatHome + scenarioFilePath + "\\" + scenarioId + "\\" +scenarioId + ".xml";
@@ -222,11 +222,11 @@ public class BUnitServiceImpl implements BUnitService {
 					continue;
 				}
 				
-				if(isLinux) {
+				/*if(isLinux) {
 					buintUtil.convertActionToXml(action, scenarioPathLocation + "/" + action.DATA.ID + ".xml");
 				} else {
 					buintUtil.convertActionToXml(action, scenarioPathLocation + "\\" + action.DATA.ID + ".xml");
-				}
+				}*/
 				
 				List<Action> actionList = new ArrayList<Action>();
 				Action action2Save = new Action();
@@ -239,17 +239,48 @@ public class BUnitServiceImpl implements BUnitService {
 				if(scenario.ACTIONLIST == null || scenario.ACTIONLIST.ACTION == null) {
 					ActionList actionList2Save = new ActionList(actionList);
 					scenario.ACTIONLIST = actionList2Save;
+					if(isLinux) {
+						buintUtil.convertActionToXml(action, scenarioPathLocation + "/" + action.DATA.ID + ".xml");
+					} else {
+						buintUtil.convertActionToXml(action, scenarioPathLocation + "\\" + action.DATA.ID + ".xml");
+					}
 				} else {
 					//TODO same id draged
 					List<Action> actionsToCheck = scenario.ACTIONLIST.ACTION;
 					Action actionIdToCHeck = actionsToCheck.get(actionsToCheck.size()-1);
+					
+					List<String> ids = new ArrayList<String>();
+					for(Action act : actionsToCheck) {
+						ids.add(act.ID);
+					}
+					int count = 0;
+					for(String id : ids) {
+						if(id.startsWith(actionId)){
+							count++;
+						}
+					}
+					
 					System.out.println("Exception block out");
 					if(actionIdToCHeck.ID.equals(actionId)) {
 						System.out.println("Exception block");
 						throw new Exception("Same Id Dragged.");
+					} else if(actionIdToCHeck.ID.equals(actionId+count)) {
+							System.out.println("exception 2 : " + actionId+count);
+							throw new Exception("Same Id Dragged.");
 					}
 					
+					String actionIdToSave = action.DATA.ID;
+					if(count > 0) {
+						actionIdToSave = action.DATA.ID + (count+1);
+					}
+					action2Save.ID = actionIdToSave;
 					scenario.ACTIONLIST.ACTION.add(action2Save);
+					
+					if(isLinux) {
+						buintUtil.convertActionToXml(action, scenarioPathLocation + "/" + actionIdToSave + ".xml");
+					} else {
+						buintUtil.convertActionToXml(action, scenarioPathLocation + "\\" + actionIdToSave + ".xml");
+					}
 				}
 				
 				System.out.println(scenario.ACTIONLIST.ACTION);
@@ -283,7 +314,7 @@ public class BUnitServiceImpl implements BUnitService {
 
 	public ScenarioResponse deleteScenario(String actionId, String scenarioId) throws Exception {
 
-		String tomcatHome = System.getProperty("catalina.base");
+		String tomcatHome = System.getProperty("user.home");
 		String scenarioBasePath = tomcatHome + scenarioFilePath + "\\" + scenarioId;
 		String path = tomcatHome + scenarioFilePath + "\\" + scenarioId + "\\" + scenarioId + ".xml";
 		
@@ -340,7 +371,7 @@ public class BUnitServiceImpl implements BUnitService {
 			return null;
 		}
 
-		String tomcatHome = System.getProperty("catalina.base");
+		String tomcatHome = System.getProperty("user.home");
 		String path = tomcatHome + scenarioFilePath + "\\" + scenarioName + "\\" + scenarioName + ".xml";
 		
 		if(isLinux) {
@@ -386,7 +417,7 @@ public class BUnitServiceImpl implements BUnitService {
 			return null;
 		}
 
-		String tomcatHome = System.getProperty("catalina.base");
+		String tomcatHome = System.getProperty("user.home");
 		String path = tomcatHome + scenarioFilePath + "\\" + scenarioName + "\\" + scenarioName + ".xml";
 		if(isLinux) {
 			path = tomcatHome + linuxScenarioFilePath + "/" + scenarioName + "/" + scenarioName + ".xml";
@@ -409,7 +440,7 @@ public class BUnitServiceImpl implements BUnitService {
 	
 	public List<String> getScenario() {
 
-		String tomcatHome = System.getProperty("catalina.base");
+		String tomcatHome = System.getProperty("user.home");
 		String path = tomcatHome + scenarioFilePath;
 		
 		if(isLinux) {
@@ -430,7 +461,7 @@ public class BUnitServiceImpl implements BUnitService {
 	
 	public List<InputFlistResponse> getInputFList(String actionId, String scenarioId) throws Exception {
 		
-		String tomcatHome = System.getProperty("catalina.base");
+		String tomcatHome = System.getProperty("user.home");
 		String path = tomcatHome + scenarioFilePath + "\\" + scenarioId + "\\" + actionId + ".xml";
 		
 		if(isLinux) {
@@ -519,7 +550,7 @@ public class BUnitServiceImpl implements BUnitService {
 	
 	public List<InputFlistResponse> getOutputFList(String actionId, String scenarioId) throws Exception {
 
-		String tomcatHome = System.getProperty("catalina.base");
+		String tomcatHome = System.getProperty("user.home");
 		String path = tomcatHome + scenarioFilePath + "\\" + scenarioId + "\\" + actionId + ".xml";
 		if(isLinux) {
 			path = tomcatHome + linuxScenarioFilePath + "/" + scenarioId + "/" + actionId + ".xml";
@@ -773,7 +804,7 @@ public class BUnitServiceImpl implements BUnitService {
 	
 	public List<String> getLogs(String scenarioId) {
 		
-		String tomcatHome = System.getProperty("catalina.base");
+		String tomcatHome = System.getProperty("user.home");
 		String path = tomcatHome + scenarioFilePath + "\\" + scenarioId;
 		
 		if(isLinux) {
@@ -829,7 +860,7 @@ public class BUnitServiceImpl implements BUnitService {
 	}
 	
 	public String editScenarioInput(String actionId, String scenarioId, EditedOutputList editedOutputList) throws Exception {
-		String tomcatHome = System.getProperty("catalina.base");
+		String tomcatHome = System.getProperty("user.home");
 
 		String actionPath = tomcatHome + scenarioFilePath + "\\" + scenarioId + "\\" + actionId + ".xml"; 
 		if(isLinux) {
