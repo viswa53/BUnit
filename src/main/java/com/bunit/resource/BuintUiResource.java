@@ -180,4 +180,15 @@ public class BuintUiResource {
 
 		return bUnitService.getLogs(scenarioId);
 	}
+	
+	@GET
+	@Produces("application/json")
+	@Path("/run_scenario/{scenario_id}")
+	public String runScenario(@PathParam("scenario_id")String scenarioId) 
+			throws Exception{
+		
+		bUnitService.runScenario(scenarioId);
+		
+		return "Successfully ran scenario";
+	}
 }

@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import com.bunit.response.to.ActionInfo;
 import com.bunit.response.to.ActionResponse;
@@ -176,8 +177,21 @@ public class BUnitServiceImpl implements BUnitService {
 			actionPath = tomcatHome + linuxScenarioFilePath + "/" + scenarioId + "/" + actionId + ".xml";
 		}
 		
-		addElementToXml(scenarioPath, editedOutputList.getValues());
-		addElementToXml(actionPath, editedOutputList.getValues());
+		Scenario scenario = buintUtil.convertXmlToScenario(new File(scenarioPath));
+		List<Action> actions = scenario.ACTIONLIST.ACTION;
+		int count = 0;
+		if(actions != null && actions.size() > 0) {
+			for(int index = 0; index < actions.size(); index++ ) {
+				Action action = actions.get(index);
+				if(action.ID.equals(actionId)) {
+					count = index;
+				}
+			}
+		}
+		
+		addElementToXml(scenarioPath, editedOutputList.getValues(), true, count);
+		
+		addElementToXml(actionPath, editedOutputList.getValues(),false, count);
 		
 		System.out.println(editedOutputList.getValues());
 
@@ -562,9 +576,7 @@ public class BUnitServiceImpl implements BUnitService {
 
 		if(directory != null) {
 			Action action = buintUtil.convertXmlToAction(directory);
-
-			if(action.DATA.ID.equals(actionId)) {
-				
+			if(actionId.startsWith(action.DATA.ID)) {
 				FList outputlist = action.OUTPUT.FLIST;
 				
 				//FLIST respos
@@ -830,7 +842,7 @@ public class BUnitServiceImpl implements BUnitService {
 		return logFileNames;
 	}
 	
-	private void addElementToXml(String fileName, Map<String, String> outputValues) throws Exception {
+	private void addElementToXml(String fileName, Map<String, String> outputValues, Boolean fromScenario, int count) throws Exception {
 
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -842,10 +854,23 @@ public class BUnitServiceImpl implements BUnitService {
 		
 		for(Map.Entry<String, String> entry : outputValues.entrySet()) {
 			if(entry.getValue() != null && !entry.getValue().isEmpty()) {
-				Element newServer = document.createElement("var");
-				newServer.setAttribute("name", String.format(name, entry.getValue()));
-				newServer.setAttribute("value", String.format(value, entry.getKey().replace("|", "/")));
-				root.appendChild(newServer);
+
+				if(fromScenario) {
+					NodeList actionList = document.getElementsByTagName("ACTIONLIST");
+					Element element = (Element) actionList.item(0);
+					NodeList actions = element.getElementsByTagName("ACTION");
+					Element action = (Element) actions.item(count);
+					Element newServer = document.createElement("var");
+					newServer.setAttribute("name", String.format(name, entry.getValue()));
+					newServer.setAttribute("value", String.format(value, entry.getKey().replace("|", "/")));
+					action.appendChild(newServer);
+
+				} else {
+					Element newServer = document.createElement("var");
+					newServer.setAttribute("name", String.format(name, entry.getValue()));
+					newServer.setAttribute("value", String.format(value, entry.getKey().replace("|", "/")));
+					root.appendChild(newServer);
+				}
 			}
 		}
 
@@ -941,4 +966,14 @@ public class BUnitServiceImpl implements BUnitService {
 		return "Input FList edited successfully";
 	}
 	
+	public void runScenario(String scenarioId) throws Exception {
+		
+		//$HOME/bunit/perl generate_scenario_xml.pl "ScenarioName"
+		String userHome = System.getProperty("user.home");
+		String command = "perl " + userHome + "/bunit/" + "generate_scenario_xml.pl " + scenarioId;
+		
+		System.out.println("perl ccommand is : " + command);
+		
+		Runtime.getRuntime().exec(command);
+	}
 }

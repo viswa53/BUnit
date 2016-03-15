@@ -32,4 +32,6 @@ public interface BUnitService {
 	public List<String> getLogs(String scenarioId);
 	
 	public String editScenarioInput(String actionId, String scenarioId, EditedOutputList editedOutputList) throws Exception;
+	
+	public void runScenario(String scenarioId) throws Exception;
 }

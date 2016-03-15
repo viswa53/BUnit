@@ -405,7 +405,23 @@
             }); 
             $('#tdlg').dialog('close');
         }
+	
+        function runScenario() {
+        	 var presentScenario = $(".title").text();
+        	 if(presentScenario == null || presentScenario.length==0) {
+				window.alert("No scenario found.");        		 
+        		 return;
+        	 }
+        	
+        	 $.ajax({
+                 url: "/bunit/rest/bunit/run_scenario/"+presentScenario,
+                 context: document.body
+             }).done(function(response) {
 
+             });
+        	 
+        	console.log("in run scenario");
+        }
          
     </script>
     <style type="text/css">
@@ -512,7 +528,7 @@
             </table>
             <div id="toolbar">
                 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true">Config Scenario</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true">Run Scenario</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="runScenario()">Run Scenario</a>
             </div>
         </div>
         <div id="dlg" class="easyui-dialog" title="Basic Dialog" data-options="
