@@ -1,5 +1,7 @@
 package com.bunit.xml.to;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name ="FLIST")
@@ -24,6 +26,8 @@ public class FList {
 	public BillInfo BILLINFO;
 	
 	public NameInfo NAMEINFO;
+	
+	public List<PARAMS> PARAMS;
 
 	public FList() {
 		
@@ -32,7 +36,7 @@ public class FList {
 	public FList(DealInfo dEAL_INFO, String pOID, String pROGRAM_NAME,
 			String sERVICE_OBJ, String aCCOUNT_OBJ, String eND_T,
 			AcctInfo aCCTINFO, BalInfo bAL_INFO, BillInfo bILLINFO,
-			NameInfo nAMEINFO) {
+			NameInfo nAMEINFO, List<PARAMS> PARAMS) {
 		super();
 		DEAL_INFO = dEAL_INFO;
 		POID = pOID;
@@ -44,6 +48,7 @@ public class FList {
 		BAL_INFO = bAL_INFO;
 		BILLINFO = bILLINFO;
 		NAMEINFO = nAMEINFO;
+		this.PARAMS = PARAMS;
 	}
 
 	@Override
@@ -52,6 +57,4 @@ public class FList {
 				+ SERVICE_OBJ + ", ACCOUNT_OBJ=" + ACCOUNT_OBJ + ", END_T=" + END_T + ", ACCTINFO=" + ACCTINFO
 				+ ", BAL_INFO=" + BAL_INFO + ", BILLINFO=" + BILLINFO + ", NAMEINFO=" + NAMEINFO + "]";
 	}
-	
-	
 }

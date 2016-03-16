@@ -41,6 +41,7 @@ import com.bunit.xml.to.BalInfo;
 import com.bunit.xml.to.BillInfo;
 import com.bunit.xml.to.FList;
 import com.bunit.xml.to.NameInfo;
+import com.bunit.xml.to.PARAMS;
 import com.bunit.xml.to.Products;
 import com.bunit.xml.to.Scenario;
 
@@ -474,10 +475,10 @@ public class BUnitServiceImpl implements BUnitService {
 	}
 	
 	public List<InputFlistResponse> getInputFList(String actionId, String scenarioId) throws Exception {
-		
+
 		String tomcatHome = System.getProperty("user.home");
 		String path = tomcatHome + scenarioFilePath + "\\" + scenarioId + "\\" + actionId + ".xml";
-		
+
 		if(isLinux) {
 			path = tomcatHome + linuxScenarioFilePath + "/" + scenarioId + "/" + actionId + ".xml";
 		}
@@ -487,79 +488,106 @@ public class BUnitServiceImpl implements BUnitService {
 
 		if(directory != null) {
 			Action action = buintUtil.convertXmlToAction(directory);
-			
-			if(action.DATA.ID.equals(actionId)) {
-				
-				FList fList =  action.INPUT.FLIST;
 
-				List<Products>  productsList = fList.DEAL_INFO.PRODUCTS;
-				
-				InputFlistResponse inputFlistResponse = new InputFlistResponse();
-				inputFlistResponse.setName("FLIST");
-				
-				List<InputFlistResponse> inputFlistResponseChilds = new ArrayList<InputFlistResponse>();
-				
-				InputFlistResponse POID = new InputFlistResponse();
-				POID.setName("POID");
-				POID.setDefaultValue(fList.POID);
-				POID.setEditField("<div id='POID' class ='edit'></div>");
-				inputFlistResponseChilds.add(POID);
-				
-				InputFlistResponse PROGRAM_NAME = new InputFlistResponse();
-				PROGRAM_NAME.setName("PROGRAM_NAME");
-				PROGRAM_NAME.setDefaultValue(fList.PROGRAM_NAME);
-				PROGRAM_NAME.setEditField("<div id='PROGRAM_NAME' class ='edit'></div>");
-				inputFlistResponseChilds.add(PROGRAM_NAME);
-				
-				InputFlistResponse SERVICE_OBJ = new InputFlistResponse();
-				SERVICE_OBJ.setName("SERVICE_OBJ");
-				SERVICE_OBJ.setDefaultValue(fList.SERVICE_OBJ);
-				SERVICE_OBJ.setEditField("<div id='SERVICE_OBJ' class ='edit'></div>");
-				inputFlistResponseChilds.add(SERVICE_OBJ);
-				
-				InputFlistResponse dealInfo = new InputFlistResponse();
-				dealInfo.setName("DEAL_INFO");
-				
-				InputFlistResponse products = new InputFlistResponse();
-				products.setName("products");
-				
-				List<InputFlistResponse> productsChildren = new ArrayList<InputFlistResponse>();
-				
-				for(int index = 0; index < productsList.size(); index++) {
-					
-					Products prod = productsList.get(index);
-					InputFlistResponse product = new InputFlistResponse();
-					product.setName("product_"+index);
-					InputFlistResponse usageEndOffset = new InputFlistResponse();
-					usageEndOffset.setName("USAGE_END_OFFSET");
-					usageEndOffset.setDefaultValue(prod.USAGE_END_OFFSET);//<div id ='edit'>03/20/2010</div>
-					usageEndOffset.setEditField("<div id='USAGE_END_OFFSET,"+ index +"' class ='edit'></div>");
-					
-					InputFlistResponse usageEndUnit = new InputFlistResponse();
-					usageEndUnit.setName("USAGE_END_UNIT");
-					usageEndUnit.setDefaultValue(prod.USAGE_END_UNIT);
-					usageEndUnit.setEditField("<div id='USAGE_END_UNIT," + index + "' class ='edit'></div>");
-					
-					product.setChildren(Arrays.asList(usageEndOffset, usageEndUnit));
-					
-					productsChildren.add(product);
-				}
-				
-				products.setChildren(productsChildren);
-				
-				List<InputFlistResponse> dealInfoChildren = new ArrayList<InputFlistResponse>();
-				dealInfoChildren.add(products);
-				
-				dealInfo.setChildren(dealInfoChildren);
-				
-				inputFlistResponseChilds.add(dealInfo);
-				inputFlistResponse.setChildren(inputFlistResponseChilds);
-				
-				return Arrays.asList(inputFlistResponse);
+			FList fList =  action.INPUT.FLIST;
+
+			List<Products>  productsList = fList.DEAL_INFO.PRODUCTS;
+
+			InputFlistResponse inputFlistResponse = new InputFlistResponse();
+			inputFlistResponse.setName("FLIST");
+
+			List<InputFlistResponse> inputFlistResponseChilds = new ArrayList<InputFlistResponse>();
+
+			InputFlistResponse POID = new InputFlistResponse();
+			POID.setName("POID");
+			POID.setDefaultValue(fList.POID);
+			POID.setEditField("<div id='POID' class ='edit'></div>");
+			inputFlistResponseChilds.add(POID);
+
+			InputFlistResponse PROGRAM_NAME = new InputFlistResponse();
+			PROGRAM_NAME.setName("PROGRAM_NAME");
+			PROGRAM_NAME.setDefaultValue(fList.PROGRAM_NAME);
+			PROGRAM_NAME.setEditField("<div id='PROGRAM_NAME' class ='edit'></div>");
+			inputFlistResponseChilds.add(PROGRAM_NAME);
+
+			InputFlistResponse SERVICE_OBJ = new InputFlistResponse();
+			SERVICE_OBJ.setName("SERVICE_OBJ");
+			SERVICE_OBJ.setDefaultValue(fList.SERVICE_OBJ);
+			SERVICE_OBJ.setEditField("<div id='SERVICE_OBJ' class ='edit'></div>");
+			inputFlistResponseChilds.add(SERVICE_OBJ);
+
+			InputFlistResponse dealInfo = new InputFlistResponse();
+			dealInfo.setName("DEAL_INFO");
+
+			InputFlistResponse products = new InputFlistResponse();
+			products.setName("products");
+
+			List<InputFlistResponse> productsChildren = new ArrayList<InputFlistResponse>();
+
+			for(int index = 0; index < productsList.size(); index++) {
+
+				Products prod = productsList.get(index);
+				InputFlistResponse product = new InputFlistResponse();
+				product.setName("product_"+index);
+				InputFlistResponse usageEndOffset = new InputFlistResponse();
+				usageEndOffset.setName("USAGE_END_OFFSET");
+				usageEndOffset.setDefaultValue(prod.USAGE_END_OFFSET);//<div id ='edit'>03/20/2010</div>
+				usageEndOffset.setEditField("<div id='USAGE_END_OFFSET,"+ index +"' class ='edit'></div>");
+
+				InputFlistResponse usageEndUnit = new InputFlistResponse();
+				usageEndUnit.setName("USAGE_END_UNIT");
+				usageEndUnit.setDefaultValue(prod.USAGE_END_UNIT);
+				usageEndUnit.setEditField("<div id='USAGE_END_UNIT," + index + "' class ='edit'></div>");
+
+				product.setChildren(Arrays.asList(usageEndOffset, usageEndUnit));
+
+				productsChildren.add(product);
 			}
-		}
 
-		return null;
+			products.setChildren(productsChildren);
+
+			List<InputFlistResponse> dealInfoChildren = new ArrayList<InputFlistResponse>();
+			dealInfoChildren.add(products);
+
+			dealInfo.setChildren(dealInfoChildren);
+
+
+			InputFlistResponse params = new InputFlistResponse();
+			params.setName("params");
+
+			List<InputFlistResponse> paramsChildList = new ArrayList<InputFlistResponse>();
+			List<PARAMS>  paramsList = fList.PARAMS;
+			for(int index = 0; index < paramsList.size(); index++) {
+
+				PARAMS param = paramsList.get(index);
+				InputFlistResponse paramsC = new InputFlistResponse();
+				paramsC.setName("param_"+index);
+				InputFlistResponse plan = new InputFlistResponse();
+				plan.setName("PLAN");
+				plan.setDefaultValue(param.PLAN);//<div id ='edit'>03/20/2010</div>
+				plan.setEditField("<div id='PLAN,"+ index +"' class ='edit'></div>");
+
+				InputFlistResponse service = new InputFlistResponse();
+				service.setName("SERVICE");
+				service.setDefaultValue(param.SERVICE);
+				service.setEditField("<div id='SERVICE," + index + "' class ='edit'></div>");
+
+				paramsC.setChildren(Arrays.asList(plan, service));
+
+				paramsChildList.add(paramsC);
+			}
+
+			params.setChildren(paramsChildList);
+
+			inputFlistResponseChilds.add(dealInfo);
+			inputFlistResponseChilds.add(params);
+
+			inputFlistResponse.setChildren(inputFlistResponseChilds);
+
+			return Arrays.asList(inputFlistResponse);
+		} else {
+			return null;
+		}
 	}
 	
 	public List<InputFlistResponse> getOutputFList(String actionId, String scenarioId) throws Exception {
@@ -576,242 +604,240 @@ public class BUnitServiceImpl implements BUnitService {
 
 		if(directory != null) {
 			Action action = buintUtil.convertXmlToAction(directory);
-			if(actionId.startsWith(action.DATA.ID)) {
-				FList outputlist = action.OUTPUT.FLIST;
-				
-				//FLIST respos
-				InputFlistResponse  flistResponse = new InputFlistResponse();
-				flistResponse.setName("FLIST");
-				
-				//AcctInfo start
-				AcctInfo acttInfo = outputlist.ACCTINFO;
-				
-				InputFlistResponse  acttInfoResponse = new InputFlistResponse();
-				acttInfoResponse.setName("ACCTINFO");
-				
-				InputFlistResponse POIDResponse = new InputFlistResponse();
-				POIDResponse.setName("POID");
-				POIDResponse.setDefaultValue(acttInfo.POID);
-				POIDResponse.setEditField("<div id='ACCTINFO|POID' class ='output_edit'></div>");
-				
-				acttInfoResponse.setChildren(Arrays.asList(POIDResponse));
-				//AcctInfo end
-				
-				
-				//BAL_INFO start 
-				BalInfo balInfo = outputlist.BAL_INFO;
-				//BAL_INFO
-				InputFlistResponse balInfoObjResponse = new InputFlistResponse();
-				balInfoObjResponse.setName("BAL_INFO");
-				
-				//BILLINFO_OBJ
-				InputFlistResponse billinfoObjResponse = new InputFlistResponse();
-				billinfoObjResponse.setName("BILLINFO_OBJ");
-				billinfoObjResponse.setDefaultValue(balInfo.BILLINFO_OBJ);
-				billinfoObjResponse.setEditField("<div id='BAL_INFO|BILLINFO_OBJ' class ='output_edit'></div>");
-				
-				//NAME
-				InputFlistResponse nameResponse = new InputFlistResponse();
-				nameResponse.setName("NAME");
-				nameResponse.setDefaultValue(balInfo.NAME);
-				nameResponse.setEditField("<div id='BAL_INFO|NAME' class ='output_edit'></div>");
-				
-				//POID
-				InputFlistResponse billPoidResponse = new InputFlistResponse();
-				billPoidResponse.setName("POID");
-				billPoidResponse.setDefaultValue(balInfo.POID);
-				billPoidResponse.setEditField("<div id='BAL_INFO|POID' class ='output_edit'></div>");
-				
-				balInfoObjResponse.setChildren(Arrays.asList(billinfoObjResponse, nameResponse, billPoidResponse));
-				//BAL_INFO end
-				
-				//BILLINFO start
-				BillInfo billInfo = outputlist.BILLINFO;
-				InputFlistResponse billInfoObjResponse = new InputFlistResponse();
-				billInfoObjResponse.setName("BILLINFO");
-				
-				//BAL_GRP_OBJ
-				InputFlistResponse balGrpObjResponse = new InputFlistResponse();
-				balGrpObjResponse.setName("BAL_GRP_OBJ");
-				balGrpObjResponse.setDefaultValue(billInfo.BAL_GRP_OBJ);
-				balGrpObjResponse.setEditField("<div id='BILLINFO|BAL_GRP_OBJ' class ='output_edit'></div>");
-				
-				//BILLINFO_ID
-				InputFlistResponse billinfoIdResponse = new InputFlistResponse();
-				billinfoIdResponse.setName("BILLINFO_ID");
-				billinfoIdResponse.setDefaultValue(billInfo.BILLINFO_ID);
-				billinfoIdResponse.setEditField("<div id='BILLINFO|BILLINFO_ID' class ='output_edit'></div>");
-				
-				//BILL_WHEN
-				InputFlistResponse billWhenResponse = new InputFlistResponse();
-				billWhenResponse.setName("BILL_WHEN");
-				billWhenResponse.setDefaultValue(billInfo.BILL_WHEN);
-				billWhenResponse.setEditField("<div id='BILLINFO|BILL_WHEN' class ='output_edit'></div>");
-				
-				//CURRENCY
-				InputFlistResponse currencyResponse = new InputFlistResponse();
-				currencyResponse.setName("CURRENCY");
-				currencyResponse.setDefaultValue(billInfo.CURRENCY);
-				currencyResponse.setEditField("<div id='BILLINFO|CURRENCY' class ='output_edit'></div>");
-				
-				//CURRENCY_SECONDARY
-				InputFlistResponse currencySecondaryResponse = new InputFlistResponse();
-				currencySecondaryResponse.setName("CURRENCY_SECONDARY");
-				currencySecondaryResponse.setDefaultValue(billInfo.CURRENCY_SECONDARY);
-				currencySecondaryResponse.setEditField("<div id='BILLINFO|CURRENCY_SECONDARY' class ='output_edit'></div>");
-				
-				//EFFECTIVE_T
-				InputFlistResponse effectiveTResponse = new InputFlistResponse();
-				effectiveTResponse.setName("EFFECTIVE_T");
-				effectiveTResponse.setDefaultValue(billInfo.EFFECTIVE_T);
-				effectiveTResponse.setEditField("<div id='BILLINFO|EFFECTIVE_T' class ='output_edit'></div>");
-				
-				//PAYINFO_OBJ
-				InputFlistResponse PAYINFO_OBJ = new InputFlistResponse();
-				PAYINFO_OBJ.setName("PAYINFO_OBJ");
-				PAYINFO_OBJ.setDefaultValue(billInfo.PAYINFO_OBJ);
-				PAYINFO_OBJ.setEditField("<div id='BILLINFO|PAYINFO_OBJ' class ='output_edit'></div>");
-				
-				//STATUS
-				InputFlistResponse STATUS = new InputFlistResponse();
-				STATUS.setName("STATUS");
-				STATUS.setDefaultValue(billInfo.STATUS);
-				STATUS.setEditField("<div id='BILLINFO|STATUS' class ='output_edit'></div>");
-				
-				//PAY_TYPE
-				InputFlistResponse PAY_TYPE = new InputFlistResponse();
-				PAY_TYPE.setName("PAY_TYPE");
-				PAY_TYPE.setDefaultValue(billInfo.PAY_TYPE);
-				PAY_TYPE.setEditField("<div id='BILLINFO|PAY_TYPE' class ='output_edit'></div>");
-				
-				//POID
-				InputFlistResponse POID = new InputFlistResponse();
-				POID.setName("POID");
-				POID.setDefaultValue(billInfo.POID);
-				POID.setEditField("<div id='BILLINFO|POID' class ='output_edit'></div>");
-				
-				billInfoObjResponse.setChildren(Arrays.asList(balGrpObjResponse, billinfoIdResponse, billWhenResponse, currencyResponse, currencySecondaryResponse, 
-						effectiveTResponse, PAYINFO_OBJ, STATUS, PAY_TYPE, POID));
-				//BILLINFO ends
-				
-				//NAMEINFO starts
-				
-				NameInfo nameInfo = outputlist.NAMEINFO; 
-				InputFlistResponse NAMEINFO = new InputFlistResponse();
-				NAMEINFO.setName("NAMEINFO");
-				
-				//ADDRESS
-				InputFlistResponse ADDRESS = new InputFlistResponse();
-				ADDRESS.setName("ADDRESS");
-				ADDRESS.setDefaultValue(nameInfo.ADDRESS);
-				ADDRESS.setEditField("<div id='NAMEINFO|ADDRESS' class ='output_edit'></div>");
-				
-				//CANON_COUNTRY
-				InputFlistResponse CANON_COUNTRY = new InputFlistResponse();
-				CANON_COUNTRY.setName("CANON_COUNTRY");
-				CANON_COUNTRY.setDefaultValue(nameInfo.CANON_COUNTRY);
-				CANON_COUNTRY.setEditField("<div id='NAMEINFO|CANON_COUNTRY' class ='output_edit'></div>");
-				
-				//CITY
-				InputFlistResponse CITY = new InputFlistResponse();
-				CITY.setName("CITY");
-				CITY.setDefaultValue(nameInfo.CITY);
-				CITY.setEditField("<div id='NAMEINFO|CITY' class ='output_edit'></div>");
-				
-				//COMPANY
-				InputFlistResponse COMPANY = new InputFlistResponse();
-				COMPANY.setName("COMPANY");
-				COMPANY.setDefaultValue(nameInfo.COMPANY);
-				COMPANY.setEditField("<div id='NAMEINFO|COMPANY' class ='output_edit'></div>");
-				
-				//CONTACT_TYPE
-				InputFlistResponse CONTACT_TYPE = new InputFlistResponse();
-				CONTACT_TYPE.setName("CONTACT_TYPE");
-				CONTACT_TYPE.setDefaultValue(nameInfo.CONTACT_TYPE);
-				CONTACT_TYPE.setEditField("<div id='NAMEINFO|CONTACT_TYPE' class ='output_edit'></div>");
-				
-				//COUNTRY
-				InputFlistResponse COUNTRY = new InputFlistResponse();
-				COUNTRY.setName("COUNTRY");
-				COUNTRY.setDefaultValue(nameInfo.COUNTRY);
-				COUNTRY.setEditField("<div id='NAMEINFO|COUNTRY' class ='output_edit'></div>");
-				
-				//ELEMENT_ID
-				InputFlistResponse ELEMENT_ID = new InputFlistResponse();
-				ELEMENT_ID.setName("ELEMENT_ID");
-				ELEMENT_ID.setDefaultValue(nameInfo.ELEMENT_ID);
-				ELEMENT_ID.setEditField("<div id='NAMEINFO|ELEMENT_ID' class ='output_edit'></div>");
-				
-				//EMAIL_ADDR
-				InputFlistResponse EMAIL_ADDR = new InputFlistResponse();
-				EMAIL_ADDR.setName("EMAIL_ADDR");
-				EMAIL_ADDR.setDefaultValue(nameInfo.EMAIL_ADDR);
-				EMAIL_ADDR.setEditField("<div id='NAMEINFO|EMAIL_ADDR' class ='output_edit'></div>");
-				
-				//FIRST_NAME
-				InputFlistResponse FIRST_NAME = new InputFlistResponse();
-				FIRST_NAME.setName("FIRST_NAME");
-				FIRST_NAME.setDefaultValue(nameInfo.FIRST_NAME);
-				FIRST_NAME.setEditField("<div id='NAMEINFO|FIRST_NAME' class ='output_edit'></div>");
-				
-				//LAST_NAME
-				InputFlistResponse LAST_NAME = new InputFlistResponse();
-				LAST_NAME.setName("LAST_NAME");
-				LAST_NAME.setDefaultValue(nameInfo.LAST_NAME);
-				LAST_NAME.setEditField("<div id='NAMEINFO|LAST_NAME' class ='output_edit'></div>");
-				
-				//MIDDLE_NAME
-				InputFlistResponse MIDDLE_NAME = new InputFlistResponse();
-				MIDDLE_NAME.setName("MIDDLE_NAME");
-				MIDDLE_NAME.setDefaultValue(nameInfo.MIDDLE_NAME);
-				MIDDLE_NAME.setEditField("<div id='NAMEINFO|MIDDLE_NAME' class ='output_edit'></div>");
-				
-				//PHONES
-				InputFlistResponse PHONES = new InputFlistResponse();
-				PHONES.setName("PHONES");
-				
-				//PHONE
-				InputFlistResponse PHONE = new InputFlistResponse();
-				PHONE.setName("PHONE");
-				PHONE.setDefaultValue(nameInfo.PHONES.PHONE);
-				PHONE.setEditField("<div id='NAMEINFO|PHONES|PHONE' class ='output_edit'></div>");
-				//TYPE
-				InputFlistResponse TYPE = new InputFlistResponse();
-				TYPE.setName("TYPE");
-				TYPE.setDefaultValue(nameInfo.PHONES.TYPE);
-				TYPE.setEditField("<div id='NAMEINFO|PHONES|TYPE' class ='output_edit'></div>");
-				
-				PHONES.setChildren(Arrays.asList(PHONE, TYPE));
-				
-				//SALUTATION
-				InputFlistResponse SALUTATION = new InputFlistResponse();
-				SALUTATION.setName("SALUTATION");
-				SALUTATION.setDefaultValue(nameInfo.SALUTATION);
-				SALUTATION.setEditField("<div id='NAMEINFO|SALUTATION' class ='output_edit'></div>");
-				
-				//STATE
-				InputFlistResponse STATE = new InputFlistResponse();
-				STATE.setName("STATE");
-				STATE.setDefaultValue(nameInfo.STATE);
-				STATE.setEditField("<div id='NAMEINFO|STATE' class ='output_edit'></div>");
-				
-				//ZIP
-				InputFlistResponse ZIP = new InputFlistResponse();
-				ZIP.setName("ZIP");
-				ZIP.setDefaultValue(nameInfo.ZIP);
-				ZIP.setEditField("<div id='NAMEINFO|ZIP' class ='output_edit'></div>");
-				
-				NAMEINFO.setChildren(Arrays.asList(ADDRESS, CANON_COUNTRY, CITY, COMPANY, CONTACT_TYPE, COUNTRY, 
-						ELEMENT_ID, EMAIL_ADDR, FIRST_NAME, LAST_NAME, MIDDLE_NAME, PHONES, SALUTATION, STATE, ZIP));
-				
-				
-				flistResponse.setChildren(Arrays.asList(acttInfoResponse, balInfoObjResponse, billInfoObjResponse, NAMEINFO));
-				
-				return Arrays.asList(flistResponse);
-			}
-		}
+			FList outputlist = action.OUTPUT.FLIST;
 
-		return null;
+			//FLIST respos
+			InputFlistResponse  flistResponse = new InputFlistResponse();
+			flistResponse.setName("FLIST");
+
+			//AcctInfo start
+			AcctInfo acttInfo = outputlist.ACCTINFO;
+
+			InputFlistResponse  acttInfoResponse = new InputFlistResponse();
+			acttInfoResponse.setName("ACCTINFO");
+
+			InputFlistResponse POIDResponse = new InputFlistResponse();
+			POIDResponse.setName("POID");
+			POIDResponse.setDefaultValue(acttInfo.POID);
+			POIDResponse.setEditField("<div id='ACCTINFO|POID' class ='output_edit'></div>");
+
+			acttInfoResponse.setChildren(Arrays.asList(POIDResponse));
+			//AcctInfo end
+
+
+			//BAL_INFO start 
+			BalInfo balInfo = outputlist.BAL_INFO;
+			//BAL_INFO
+			InputFlistResponse balInfoObjResponse = new InputFlistResponse();
+			balInfoObjResponse.setName("BAL_INFO");
+
+			//BILLINFO_OBJ
+			InputFlistResponse billinfoObjResponse = new InputFlistResponse();
+			billinfoObjResponse.setName("BILLINFO_OBJ");
+			billinfoObjResponse.setDefaultValue(balInfo.BILLINFO_OBJ);
+			billinfoObjResponse.setEditField("<div id='BAL_INFO|BILLINFO_OBJ' class ='output_edit'></div>");
+
+			//NAME
+			InputFlistResponse nameResponse = new InputFlistResponse();
+			nameResponse.setName("NAME");
+			nameResponse.setDefaultValue(balInfo.NAME);
+			nameResponse.setEditField("<div id='BAL_INFO|NAME' class ='output_edit'></div>");
+
+			//POID
+			InputFlistResponse billPoidResponse = new InputFlistResponse();
+			billPoidResponse.setName("POID");
+			billPoidResponse.setDefaultValue(balInfo.POID);
+			billPoidResponse.setEditField("<div id='BAL_INFO|POID' class ='output_edit'></div>");
+
+			balInfoObjResponse.setChildren(Arrays.asList(billinfoObjResponse, nameResponse, billPoidResponse));
+			//BAL_INFO end
+
+			//BILLINFO start
+			BillInfo billInfo = outputlist.BILLINFO;
+			InputFlistResponse billInfoObjResponse = new InputFlistResponse();
+			billInfoObjResponse.setName("BILLINFO");
+
+			//BAL_GRP_OBJ
+			InputFlistResponse balGrpObjResponse = new InputFlistResponse();
+			balGrpObjResponse.setName("BAL_GRP_OBJ");
+			balGrpObjResponse.setDefaultValue(billInfo.BAL_GRP_OBJ);
+			balGrpObjResponse.setEditField("<div id='BILLINFO|BAL_GRP_OBJ' class ='output_edit'></div>");
+
+			//BILLINFO_ID
+			InputFlistResponse billinfoIdResponse = new InputFlistResponse();
+			billinfoIdResponse.setName("BILLINFO_ID");
+			billinfoIdResponse.setDefaultValue(billInfo.BILLINFO_ID);
+			billinfoIdResponse.setEditField("<div id='BILLINFO|BILLINFO_ID' class ='output_edit'></div>");
+
+			//BILL_WHEN
+			InputFlistResponse billWhenResponse = new InputFlistResponse();
+			billWhenResponse.setName("BILL_WHEN");
+			billWhenResponse.setDefaultValue(billInfo.BILL_WHEN);
+			billWhenResponse.setEditField("<div id='BILLINFO|BILL_WHEN' class ='output_edit'></div>");
+
+			//CURRENCY
+			InputFlistResponse currencyResponse = new InputFlistResponse();
+			currencyResponse.setName("CURRENCY");
+			currencyResponse.setDefaultValue(billInfo.CURRENCY);
+			currencyResponse.setEditField("<div id='BILLINFO|CURRENCY' class ='output_edit'></div>");
+
+			//CURRENCY_SECONDARY
+			InputFlistResponse currencySecondaryResponse = new InputFlistResponse();
+			currencySecondaryResponse.setName("CURRENCY_SECONDARY");
+			currencySecondaryResponse.setDefaultValue(billInfo.CURRENCY_SECONDARY);
+			currencySecondaryResponse.setEditField("<div id='BILLINFO|CURRENCY_SECONDARY' class ='output_edit'></div>");
+
+			//EFFECTIVE_T
+			InputFlistResponse effectiveTResponse = new InputFlistResponse();
+			effectiveTResponse.setName("EFFECTIVE_T");
+			effectiveTResponse.setDefaultValue(billInfo.EFFECTIVE_T);
+			effectiveTResponse.setEditField("<div id='BILLINFO|EFFECTIVE_T' class ='output_edit'></div>");
+
+			//PAYINFO_OBJ
+			InputFlistResponse PAYINFO_OBJ = new InputFlistResponse();
+			PAYINFO_OBJ.setName("PAYINFO_OBJ");
+			PAYINFO_OBJ.setDefaultValue(billInfo.PAYINFO_OBJ);
+			PAYINFO_OBJ.setEditField("<div id='BILLINFO|PAYINFO_OBJ' class ='output_edit'></div>");
+
+			//STATUS
+			InputFlistResponse STATUS = new InputFlistResponse();
+			STATUS.setName("STATUS");
+			STATUS.setDefaultValue(billInfo.STATUS);
+			STATUS.setEditField("<div id='BILLINFO|STATUS' class ='output_edit'></div>");
+
+			//PAY_TYPE
+			InputFlistResponse PAY_TYPE = new InputFlistResponse();
+			PAY_TYPE.setName("PAY_TYPE");
+			PAY_TYPE.setDefaultValue(billInfo.PAY_TYPE);
+			PAY_TYPE.setEditField("<div id='BILLINFO|PAY_TYPE' class ='output_edit'></div>");
+
+			//POID
+			InputFlistResponse POID = new InputFlistResponse();
+			POID.setName("POID");
+			POID.setDefaultValue(billInfo.POID);
+			POID.setEditField("<div id='BILLINFO|POID' class ='output_edit'></div>");
+
+			billInfoObjResponse.setChildren(Arrays.asList(balGrpObjResponse, billinfoIdResponse, billWhenResponse, currencyResponse, currencySecondaryResponse, 
+					effectiveTResponse, PAYINFO_OBJ, STATUS, PAY_TYPE, POID));
+			//BILLINFO ends
+
+			//NAMEINFO starts
+
+			NameInfo nameInfo = outputlist.NAMEINFO; 
+			InputFlistResponse NAMEINFO = new InputFlistResponse();
+			NAMEINFO.setName("NAMEINFO");
+
+			//ADDRESS
+			InputFlistResponse ADDRESS = new InputFlistResponse();
+			ADDRESS.setName("ADDRESS");
+			ADDRESS.setDefaultValue(nameInfo.ADDRESS);
+			ADDRESS.setEditField("<div id='NAMEINFO|ADDRESS' class ='output_edit'></div>");
+
+			//CANON_COUNTRY
+			InputFlistResponse CANON_COUNTRY = new InputFlistResponse();
+			CANON_COUNTRY.setName("CANON_COUNTRY");
+			CANON_COUNTRY.setDefaultValue(nameInfo.CANON_COUNTRY);
+			CANON_COUNTRY.setEditField("<div id='NAMEINFO|CANON_COUNTRY' class ='output_edit'></div>");
+
+			//CITY
+			InputFlistResponse CITY = new InputFlistResponse();
+			CITY.setName("CITY");
+			CITY.setDefaultValue(nameInfo.CITY);
+			CITY.setEditField("<div id='NAMEINFO|CITY' class ='output_edit'></div>");
+
+			//COMPANY
+			InputFlistResponse COMPANY = new InputFlistResponse();
+			COMPANY.setName("COMPANY");
+			COMPANY.setDefaultValue(nameInfo.COMPANY);
+			COMPANY.setEditField("<div id='NAMEINFO|COMPANY' class ='output_edit'></div>");
+
+			//CONTACT_TYPE
+			InputFlistResponse CONTACT_TYPE = new InputFlistResponse();
+			CONTACT_TYPE.setName("CONTACT_TYPE");
+			CONTACT_TYPE.setDefaultValue(nameInfo.CONTACT_TYPE);
+			CONTACT_TYPE.setEditField("<div id='NAMEINFO|CONTACT_TYPE' class ='output_edit'></div>");
+
+			//COUNTRY
+			InputFlistResponse COUNTRY = new InputFlistResponse();
+			COUNTRY.setName("COUNTRY");
+			COUNTRY.setDefaultValue(nameInfo.COUNTRY);
+			COUNTRY.setEditField("<div id='NAMEINFO|COUNTRY' class ='output_edit'></div>");
+
+			//ELEMENT_ID
+			InputFlistResponse ELEMENT_ID = new InputFlistResponse();
+			ELEMENT_ID.setName("ELEMENT_ID");
+			ELEMENT_ID.setDefaultValue(nameInfo.ELEMENT_ID);
+			ELEMENT_ID.setEditField("<div id='NAMEINFO|ELEMENT_ID' class ='output_edit'></div>");
+
+			//EMAIL_ADDR
+			InputFlistResponse EMAIL_ADDR = new InputFlistResponse();
+			EMAIL_ADDR.setName("EMAIL_ADDR");
+			EMAIL_ADDR.setDefaultValue(nameInfo.EMAIL_ADDR);
+			EMAIL_ADDR.setEditField("<div id='NAMEINFO|EMAIL_ADDR' class ='output_edit'></div>");
+
+			//FIRST_NAME
+			InputFlistResponse FIRST_NAME = new InputFlistResponse();
+			FIRST_NAME.setName("FIRST_NAME");
+			FIRST_NAME.setDefaultValue(nameInfo.FIRST_NAME);
+			FIRST_NAME.setEditField("<div id='NAMEINFO|FIRST_NAME' class ='output_edit'></div>");
+
+			//LAST_NAME
+			InputFlistResponse LAST_NAME = new InputFlistResponse();
+			LAST_NAME.setName("LAST_NAME");
+			LAST_NAME.setDefaultValue(nameInfo.LAST_NAME);
+			LAST_NAME.setEditField("<div id='NAMEINFO|LAST_NAME' class ='output_edit'></div>");
+
+			//MIDDLE_NAME
+			InputFlistResponse MIDDLE_NAME = new InputFlistResponse();
+			MIDDLE_NAME.setName("MIDDLE_NAME");
+			MIDDLE_NAME.setDefaultValue(nameInfo.MIDDLE_NAME);
+			MIDDLE_NAME.setEditField("<div id='NAMEINFO|MIDDLE_NAME' class ='output_edit'></div>");
+
+			//PHONES
+			InputFlistResponse PHONES = new InputFlistResponse();
+			PHONES.setName("PHONES");
+
+			//PHONE
+			InputFlistResponse PHONE = new InputFlistResponse();
+			PHONE.setName("PHONE");
+			PHONE.setDefaultValue(nameInfo.PHONES.PHONE);
+			PHONE.setEditField("<div id='NAMEINFO|PHONES|PHONE' class ='output_edit'></div>");
+			//TYPE
+			InputFlistResponse TYPE = new InputFlistResponse();
+			TYPE.setName("TYPE");
+			TYPE.setDefaultValue(nameInfo.PHONES.TYPE);
+			TYPE.setEditField("<div id='NAMEINFO|PHONES|TYPE' class ='output_edit'></div>");
+
+			PHONES.setChildren(Arrays.asList(PHONE, TYPE));
+
+			//SALUTATION
+			InputFlistResponse SALUTATION = new InputFlistResponse();
+			SALUTATION.setName("SALUTATION");
+			SALUTATION.setDefaultValue(nameInfo.SALUTATION);
+			SALUTATION.setEditField("<div id='NAMEINFO|SALUTATION' class ='output_edit'></div>");
+
+			//STATE
+			InputFlistResponse STATE = new InputFlistResponse();
+			STATE.setName("STATE");
+			STATE.setDefaultValue(nameInfo.STATE);
+			STATE.setEditField("<div id='NAMEINFO|STATE' class ='output_edit'></div>");
+
+			//ZIP
+			InputFlistResponse ZIP = new InputFlistResponse();
+			ZIP.setName("ZIP");
+			ZIP.setDefaultValue(nameInfo.ZIP);
+			ZIP.setEditField("<div id='NAMEINFO|ZIP' class ='output_edit'></div>");
+
+			NAMEINFO.setChildren(Arrays.asList(ADDRESS, CANON_COUNTRY, CITY, COMPANY, CONTACT_TYPE, COUNTRY, 
+					ELEMENT_ID, EMAIL_ADDR, FIRST_NAME, LAST_NAME, MIDDLE_NAME, PHONES, SALUTATION, STATE, ZIP));
+
+
+			flistResponse.setChildren(Arrays.asList(acttInfoResponse, balInfoObjResponse, billInfoObjResponse, NAMEINFO));
+
+			return Arrays.asList(flistResponse);
+		} else {
+			return null;
+		}
 	}
 	
 	public List<String> getLogs(String scenarioId) {
@@ -958,6 +984,59 @@ public class BUnitServiceImpl implements BUnitService {
 						break;
 					}
 				}
+				
+				//TODO chages starts
+				if (entry.getKey().startsWith("PLAN")) {
+					String[] keys = entry.getKey().split(",");
+					if(keys == null || keys.length < 2) {
+						continue;
+					}//PLAN
+
+					String currentKey = keys[0];
+					Integer currentParamIndex = Integer.parseInt(keys[1]);
+					List<PARAMS> paramsToEdit = action.INPUT.FLIST.PARAMS;
+					PARAMS param = paramsToEdit.get(currentParamIndex);
+					try {
+						keyNameEnum = KeyNameEnum.valueOf(currentKey);
+					} catch(Exception e) {
+						keyNameEnum = KeyNameEnum.DEFAULT;
+					}
+					switch(keyNameEnum) {
+
+					case PLAN : {
+						param.PLAN = entry.getValue();
+						break;
+					}
+					default:
+						break;
+					}
+				}
+				if (entry.getKey().startsWith("SERVICE")) {
+					String[] keys = entry.getKey().split(",");
+					if(keys == null || keys.length < 2) {
+						continue;
+					}//PLAN
+
+					String currentKey = keys[0];
+					Integer currentParamIndex = Integer.parseInt(keys[1]);
+					List<PARAMS> paramsToEdit = action.INPUT.FLIST.PARAMS;
+					PARAMS param = paramsToEdit.get(currentParamIndex);
+					try {
+						keyNameEnum = KeyNameEnum.valueOf(currentKey);
+					} catch(Exception e) {
+						keyNameEnum = KeyNameEnum.DEFAULT;
+					}
+					switch(keyNameEnum) {
+
+					case SERVICE : {
+						param.SERVICE = entry.getValue();
+						break;
+					}
+					default:
+						break;
+					}
+				}
+				//TODO ends
 			}
 		}
 

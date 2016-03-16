@@ -7,5 +7,7 @@ public enum KeyNameEnum {
 	POID,
 	PROGRAM_NAME,
 	SERVICE_OBJ,
+	PLAN,
+	SERVICE,
 	DEFAULT
 }
