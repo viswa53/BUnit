@@ -67,6 +67,9 @@ public class BUnitServiceImpl implements BUnitService {
 
 	@Value("${LINUX_ACTION_LIBRARY_FILE_PATH}")
 	private String linuxActionLibraryFilePath;
+	
+	@Value("${LOG_DIRECTORY_PATH}")
+	private String logDirectoryPath;
 
 	public ActionResponse getActions() throws Exception {
 
@@ -115,11 +118,22 @@ public class BUnitServiceImpl implements BUnitService {
 		if(isLinux) {
 			path = tomcatHome + linuxScenarioFilePath;
 		}
-
+		
+		String logDirectory = tomcatHome + logDirectoryPath;
+		
 		File file = new File(path);
-
+		File logDirectoryPathFile = new File(logDirectory);
+		
 		if (!file.exists()) {
 			if (file.mkdirs()) {
+				System.out.println("Directory is created!");
+			} else {
+				System.out.println("Failed to create directory!");
+			}
+		}
+		
+		if (!logDirectoryPathFile.exists()) {
+			if (logDirectoryPathFile.mkdirs()) {
 				System.out.println("Directory is created!");
 			} else {
 				System.out.println("Failed to create directory!");
@@ -131,6 +145,7 @@ public class BUnitServiceImpl implements BUnitService {
 		
 		String scenarioId = genericFileName + (++fileCount);
 		String scenarioPath = path + "\\" + scenarioId;
+		String logScenarioPath = logDirectory + "/" + scenarioId;
 		
 		if(isLinux) {
 			scenarioPath = path + "/" + scenarioId;
@@ -140,6 +155,15 @@ public class BUnitServiceImpl implements BUnitService {
 
 		if (!scenarioPathFile.exists()) {
 			if (scenarioPathFile.mkdirs()) {
+				System.out.println("Directory is created!");
+			} else {
+				System.out.println("Failed to create directory!");
+			}
+		}
+		
+		File logScenarioPathFile = new File(logScenarioPath);
+		if (!logScenarioPathFile.exists()) {
+			if (logScenarioPathFile.mkdirs()) {
 				System.out.println("Directory is created!");
 			} else {
 				System.out.println("Failed to create directory!");
@@ -308,7 +332,7 @@ public class BUnitServiceImpl implements BUnitService {
 					scenarioInfo.setActionDescription(action2Res.DESCRIPTION);
 					scenarioInfo.setInputFlist("<div style='cursor: pointer; text-decoration: underline;' class='inputList' id="+action2Res.ID+" onclick='inputListSelectedRow()'>InputFList</div>");
 					scenarioInfo.setOutputFlist("<div style='cursor: pointer; text-decoration: underline;'  class='outputList'  id="+action2Res.ID+" onclick='outputListSelectedRow()'>OutputFlist</div>");
-					scenarioInfo.setRunButton("<button  type='button' class='btn runBtn btn-primary'>Run</button>");
+					scenarioInfo.setRunButton("<button  type='button' class='btn runBtn btn-primary' onclick='runScenarioSelectedRow()'>Run</button>");
 					scenarioInfo.setDeleteButton("<div class='deleteIconDiv'><img src='img/delete.png' class='deleteIcon' onclick='deleteSelectedRow()'/></div>");
 					scenarioInfo.setScenarioID(scenario.SCENARIOID);
 					scenarioInfo.setStatus(scenario.STATUS);
@@ -367,7 +391,7 @@ public class BUnitServiceImpl implements BUnitService {
 			scenarioInfo.setActionDescription(action.DESCRIPTION);
 			scenarioInfo.setInputFlist("<div style='cursor: pointer; text-decoration: underline;' class='inputList' id="+action.ID+" onclick='inputListSelectedRow()'>InputFList</div>");
 			scenarioInfo.setOutputFlist("<div style='cursor: pointer; text-decoration: underline;'  class='outputList'  id="+action.ID+" onclick='outputListSelectedRow()'>OutputFlist</div>");
-			scenarioInfo.setRunButton("<button  type='button' class='btn runBtn btn-primary'>Run</button>");
+			scenarioInfo.setRunButton("<button  type='button' class='btn runBtn btn-primary' onclick='runScenarioSelectedRow()'>Run</button>");
 			scenarioInfo.setDeleteButton("<div class='deleteIconDiv'><img src='img/delete.png' class='deleteIcon' onclick='deleteSelectedRow()'/></div>");
 			scenarioInfo.setScenarioID(scenario.SCENARIOID);
 			scenarioInfo.setStatus(scenario.STATUS);
@@ -411,7 +435,7 @@ public class BUnitServiceImpl implements BUnitService {
 				scenarioInfo.setActionDescription(action.DESCRIPTION);
 				scenarioInfo.setInputFlist("<div style='cursor: pointer; text-decoration: underline;' class='inputList' id="+action.ID+" onclick='inputListSelectedRow()'>InputFList</div>");
 				scenarioInfo.setOutputFlist("<div style='cursor: pointer; text-decoration: underline;'  class='outputList'  id="+action.ID+" onclick='outputListSelectedRow()'>OutputFlist</div>");
-				scenarioInfo.setRunButton("<button  type='button' class='btn runBtn btn-primary'>Run</button>");
+				scenarioInfo.setRunButton("<button  type='button' class='btn runBtn btn-primary' onclick='runScenarioSelectedRow()'>Run</button>");
 				scenarioInfo.setDeleteButton("<div class='deleteIconDiv'><img src='img/delete.png' class='deleteIcon' onclick='deleteSelectedRow()'/></div>");
 				scenarioInfo.setScenarioID(scenario.SCENARIOID);
 				scenarioInfo.setStatus(scenario.STATUS);

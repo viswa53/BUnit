@@ -422,6 +422,15 @@
         	 
         	console.log("in run scenario");
         }
+        
+        function runScenarioSelectedRow() {
+            setTimeout(function() {
+                var row = $('#dg').datagrid('getSelected');
+                if (row) {
+					console.log(row.actionID)
+                }
+            }, 500);
+        }
          
     </script>
     <style type="text/css">
