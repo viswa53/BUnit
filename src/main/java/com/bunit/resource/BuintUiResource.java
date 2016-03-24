@@ -3,6 +3,7 @@ package com.bunit.resource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -175,7 +176,7 @@ public class BuintUiResource {
 	@GET
 	@Produces("application/json")
 	@Path("/get_logs/{scenario_id}")
-	public List<String> editLogFiles(@PathParam("scenario_id")String scenarioId) 
+	public Map<String, String> editLogFiles(@PathParam("scenario_id")String scenarioId) 
 			throws Exception{
 
 		return bUnitService.getLogs(scenarioId);

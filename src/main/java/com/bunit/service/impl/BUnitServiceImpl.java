@@ -1,11 +1,15 @@
 package com.bunit.service.impl;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -864,33 +868,6 @@ public class BUnitServiceImpl implements BUnitService {
 		}
 	}
 	
-	public List<String> getLogs(String scenarioId) {
-		
-		String tomcatHome = System.getProperty("user.home");
-		String path = tomcatHome + scenarioFilePath + "\\" + scenarioId;
-		
-		if(isLinux) {
-			 path = tomcatHome + linuxScenarioFilePath + "/" + scenarioId;
-		}
-
-		System.out.println("Getting logs from path : " + path);
-
-		File directory = new File(path);
-
-		FileFilter filter = new FileFilter() {
-			public boolean accept(File pathname) {
-				return pathname.getName().endsWith(".txt");
-			}
-		};
-		
-		List<String> logFileNames = new ArrayList<String>();
-		File[] logFiles = directory.listFiles(filter);
-		for(File logFile : logFiles) {
-			logFileNames.add(logFile.getAbsolutePath());
-		}
-		
-		return logFileNames;
-	}
 	
 	private void addElementToXml(String fileName, Map<String, String> outputValues, Boolean fromScenario, int count) throws Exception {
 
@@ -1078,5 +1055,48 @@ public class BUnitServiceImpl implements BUnitService {
 		System.out.println("perl ccommand is : " + command);
 		
 		Runtime.getRuntime().exec(command);
+	}
+	
+	public Map<String, String> getLogs(String scenarioId) throws Exception{
+
+		String tomcatHome = System.getProperty("user.home");
+
+		String path = tomcatHome + logDirectoryPath + "/" + scenarioId;
+		String locationPath = tomcatHome + logDirectoryPath + "/bunit.log";
+		System.out.println("Getting logs from path : " + path);
+
+		File directory = new File(path);
+
+		FileFilter filter = new FileFilter() {
+			public boolean accept(File pathname) {
+				return pathname.getName().endsWith(".log");
+			}
+		};
+		Map<String, String> logFileNameAndContent = new HashMap<String, String>();
+		
+		File[] logFiles = directory.listFiles(filter);
+		
+		logFileNameAndContent.put("bunit.log", readFile(locationPath));
+		for(File logFile : logFiles) {
+			logFileNameAndContent.put(logFile.getName(), readFile(logFile.getAbsolutePath()));
+		}
+		return logFileNameAndContent;
+	}
+	
+	private String readFile(String fileName) throws IOException {
+	    BufferedReader br = new BufferedReader(new FileReader(fileName));
+	    try {
+	        StringBuilder sb = new StringBuilder();
+	        String line = br.readLine();
+
+	        while (line != null) {
+	            sb.append(line);
+	            sb.append("\n");
+	            line = br.readLine();
+	        }
+	        return sb.toString();
+	    } finally {
+	        br.close();
+	    }
 	}
 }

@@ -420,6 +420,17 @@
 
              });
         	 
+        	 //TODO logss
+        	 $.ajax({
+                 url: "/bunit/rest/bunit/get_logs/"+presentScenario,
+                 context: document.body
+             }).done(function(response) {
+            	 $.each( response, function( key, value ) {
+            		  console.log( key + " : " + value );
+            		 var a =  '<div style="font-weight: bold">'+ key +': </div> <p>'+ value +'</p>';
+            		 $('#logs').append(a);
+            		});
+             });
         	console.log("in run scenario");
         }
         
@@ -507,9 +518,11 @@
         </div>
 
 
-        <div data-options="region:'south',split:true" style="height:100px; text-align:center">
-            <h5>TEST RESULTS - LOGS</h5>
-            <div id='logs' style="font-size: 14px; text-align: justify;"></div>
+        <div data-options="region:'south',split:true" style="height:100px;">
+            <h5  style="text-align:center">TEST RESULTS - LOGS</h5>
+            <div id='logs' style="font-size: 11px;">
+             	
+            </div>
         </div>
         <div data-options="region:'east',split:true" title="ACTION WIDGETS" style="width:300px;">
 

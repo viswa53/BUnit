@@ -1,6 +1,7 @@
 package com.bunit.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.bunit.response.to.ActionResponse;
 import com.bunit.response.to.EditedOutputList;
@@ -29,7 +30,7 @@ public interface BUnitService {
 
 	public List<String> openScenarioInfo(String scenarioName) throws Exception;
 	
-	public List<String> getLogs(String scenarioId);
+	public Map<String, String> getLogs(String scenarioId) throws Exception;
 	
 	public String editScenarioInput(String actionId, String scenarioId, EditedOutputList editedOutputList) throws Exception;
 	
